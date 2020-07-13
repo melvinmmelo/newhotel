@@ -21,7 +21,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -49,6 +49,39 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('reservations') }}">{{ __('Reservations') }}</a>
+                            </li>
+
+                            <li class="nav-item">
+                            <a class="nav-link" href="{{ route('accounts') }}">{{ __('Accounts') }}</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('rooms') }}">{{ __('Rooms') }}</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('companies') }}">{{ __('Companies') }}</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('travel-agents') }}">{{ __('Travel Agents') }}</a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Others
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('transactions') }}">{{ __('Transactions') }}</a>
+                                <a class="dropdown-item" href="{{ route('promos') }}">{{ __('Promos') }}</a>
+                                  <a class="dropdown-item" href="{{ route('services') }}">{{ __('Services') }}</a>
+                                  {{-- <div class="dropdown-divider"></div>
+                                  <a class="dropdown-item" href="#">Something else here</a> --}}
+                                </div>
+                              </li>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -66,6 +99,7 @@
                                     </form>
                                 </div>
                             </li>
+
                         @endguest
                     </ul>
                 </div>

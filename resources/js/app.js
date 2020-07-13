@@ -1,12 +1,12 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+require("./bootstrap");
+require("vue-multiselect/dist/vue-multiselect.min.css");
 
-require('./bootstrap');
+window.Vue = require("vue");
 
-window.Vue = require('vue');
+var Turbolinks = require("turbolinks");
+import TurbolinksAdapter from "vue-turbolinks";
+
+Turbolinks.start();
 
 /**
  * The following block of code may be used to automatically register your
@@ -19,14 +19,54 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component("card", require("./components/Card.vue").default);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+Vue.component(
+  "account-list",
+  require("./modules/account/AccountList.vue").default
+);
 
-const app = new Vue({
-    el: '#app',
+Vue.component(
+  "account-form",
+  require("./modules/account/AccountForm.vue").default
+);
+
+Vue.component("room-component", require("./modules/room/Room.vue").default);
+
+Vue.component(
+  "company-component",
+  require("./modules/company/Company.vue").default
+);
+Vue.component(
+  "travel-agent-component",
+  require("./modules/travel-agent/TravelAgent.vue").default
+);
+Vue.component(
+  "reservation-component",
+  require("./modules/reservation/Reservation.vue").default
+);
+Vue.component(
+  "reservation-list-component",
+  require("./modules/reservation/ReservationList.vue").default
+);
+
+Vue.component(
+  "transaction-component",
+  require("./modules/transaction/Transaction.vue").default
+);
+
+Vue.component("promo-component", require("./modules/promo/Promo.vue").default);
+
+Vue.component(
+  "service-component",
+  require("./modules/service/Service.vue").default
+);
+
+document.addEventListener("turbolinks:load", () => {
+  var element = document.getElementById("app");
+  if (element != null) {
+    const app = new Vue({
+      el: element
+    });
+  }
 });
