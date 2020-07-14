@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\GuestTransaction;
+use App\GuestService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class GuestTransactionController extends Controller
+class GuestServiceController extends Controller
 {
     //
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function save()
     {
-        $guestTransChk = GuestTransaction::where(['reservation_id' => request('reservation_id'),
-                                              'transaction_id' => request('transaction_id')
+        $guestTransChk = GuestService::where(['reservation_id' => request('reservation_id'),
+                                              'service_id' => request('service_id')
                                               ])->get();
         if(count($guestTransChk) > 0){
             return response()->json(["message" => "The given data is invalid.",
@@ -30,11 +25,11 @@ class GuestTransactionController extends Controller
 
         $vData = $this->validate(request(),[
             'reservation_id' => 'required|numeric',
-            'transaction_id' => 'required|numeric',
+            'service_id' => 'required|numeric',
             'user_id' => 'required|numeric'
         ]);
 
-        $guestTrans = GuestTransaction::create($vData);
-        return response()->json($guestTrans, 200);
+        $guestService = GuestService::create($vData);
+        return response()->json($guestService, 200);
     }
 }

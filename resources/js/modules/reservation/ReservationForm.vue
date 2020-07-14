@@ -56,31 +56,7 @@
           v-text="form.errors.get('tragel_agent_id')"
         ></span>
       </div>
-      <div class="form-group">
-        <label for="arrival_date">Arrival Date</label>
-        <vue-ctk-date-time-picker
-          v-model="form.arrival_date"
-          format="YYYY-MM-DD HH:mm"
-        ></vue-ctk-date-time-picker>
 
-        <span
-          class="text-danger"
-          v-if="form.errors.any('arrival_date')"
-          v-text="form.errors.get('arrival_date')"
-        ></span>
-      </div>
-      <div class="form-group">
-        <label for="departure_date">Departure Date</label>
-        <vue-ctk-date-time-picker
-          v-model="form.departure_date"
-          format="YYYY-MM-DD HH:mm"
-        ></vue-ctk-date-time-picker>
-        <span
-          class="text-danger"
-          v-if="form.errors.any('departure_date')"
-          v-text="form.errors.get('departure_date')"
-        ></span>
-      </div>
       <div class="form-group">
         <label for="adult_no">No. of adults</label>
         <input
@@ -173,8 +149,6 @@
 import Multiselect from "vue-multiselect";
 import Form from "../../core/Form.js";
 
-import VueCtkDateTimePicker from "vue-ctk-date-time-picker";
-import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css";
 export default {
   data() {
     return {
@@ -182,8 +156,6 @@ export default {
         account_id: "",
         company_id: "",
         travel_agent_id: "",
-        arrival_date: "",
-        departure_date: "",
         adult_no: "",
         child_no: "",
         payment_mode: "",
@@ -201,8 +173,7 @@ export default {
     };
   },
   components: {
-    Multiselect,
-    VueCtkDateTimePicker
+    Multiselect
   },
   methods: {
     handleSubmit() {

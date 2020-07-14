@@ -7,7 +7,7 @@
       >Add Transaction</a
     >
 
-    <a class="btn btn-danger mb-2" @click="fetchTransactionAndShowModal()"
+    <a class="btn btn-danger mb-2" @click="showAddServiceModal = true"
       >Add Service</a
     >
     <div class="row">
@@ -16,10 +16,9 @@
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Company</th>
             <th>Adult | Child</th>
+            <th>Company</th>
             <th>Travel Agent</th>
-            <th>Dates</th>
             <th>Payment Mode</th>
             <th>Status</th>
             <th>Reserved At | Updated At</th>
@@ -32,10 +31,13 @@
             <td>
               {{ item.account.last_name + " " + item.account.first_name }}
             </td>
-            <td v-if="item.company">{{ item.company.name }}</td>
             <td>{{ item.adult_no + " | " + item.child_no }}</td>
-            <td v-if="item.travel_agent">{{ item.travel_agent.name }}</td>
-            <td>{{ item.arrival_date + " | " + item.departure_date }}</td>
+            <td>
+              <span v-if="item.company">{{ item.company.name }} </span>
+            </td>
+            <td>
+              <span v-if="item.travel_agent">{{ item.travel_agent.name }}</span>
+            </td>
             <td>{{ item.payment_mode }}</td>
             <td>{{ item.status }}</td>
             <td>{{ item.created_at + " | " + item.updated_at }}</td>
@@ -55,11 +57,10 @@
                 </button>
                 <div class="dropdown-menu">
                   <a
-                    href="#"
                     class="dropdown-item"
                     @click="
                       showRoomModal = true;
-                      fetchReservedRooms(item.id);
+                      fetchReservedRooms(item.reserved_rooms);
                     "
                     >Rooms</a
                   >
@@ -144,7 +145,7 @@
       title="Room(s) Reserved"
       @close="showRoomModal = false"
     >
-      <guest-room :rooms="rooms"></guest-room>
+      <guest-room :rooms="reservedRooms"></guest-room>
     </modal>
 
     <modal
@@ -155,6 +156,16 @@
       <guest-transaction-form
         :reservations="filteredReservations"
       ></guest-transaction-form>
+    </modal>
+
+    <modal
+      v-show="showAddServiceModal"
+      title="Add Service"
+      @close="showAddServiceModal = false"
+    >
+      <guest-service-form
+        :reservations="filteredReservations"
+      ></guest-service-form>
     </modal>
   </div>
 </template>
@@ -170,6 +181,8 @@ import GuestTransactionForm from "../transaction/GuestTransactionForm";
 import RoomList from "../room/RoomList";
 import GuestRoom from "../room/GuestRoom";
 
+import GuestServiceForm from "../service/GuestServiceForm";
+
 export default {
   props: ["reservations"],
   components: {
@@ -178,7 +191,8 @@ export default {
     VueCtkDateTimePicker,
     GuestTransactionForm,
     RoomList,
-    GuestRoom
+    GuestRoom,
+    GuestServiceForm
   },
   data() {
     return {
@@ -195,7 +209,7 @@ export default {
         actual_arrival_date: "",
         remarks: ""
       }),
-      rooms: []
+      reservedRooms: []
     };
   },
   methods: {
@@ -215,15 +229,8 @@ export default {
     onSelectReservation(selectedItem) {
       this.form.reservation_id = selectedItem.id;
     },
-    fetchReservedRooms(id) {
-      window.axios
-        .get("/api/reserved-rooms/" + id)
-        .then(response => {
-          this.rooms = response.data;
-        })
-        .catch(errors => {
-          console.log(errors);
-        });
+    fetchReservedRooms(rooms) {
+      this.reservedRooms = rooms;
     },
     fetchReservations() {
       window.axios

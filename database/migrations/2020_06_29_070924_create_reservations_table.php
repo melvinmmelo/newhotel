@@ -18,8 +18,6 @@ class CreateReservationsTable extends Migration
             $table->unsignedInteger('account_id');
             $table->unsignedInteger('company_id')->nullable();
             $table->unsignedInteger('travel_agent_id')->nullable();
-            $table->datetime('arrival_date')->nullable();
-            $table->datetime('departure_date')->nullable();
             $table->datetime('actual_arrival_date')->nullable();
             $table->datetime('actual_departure_date')->nullable();
             $table->integer('adult_no')->nullable();
@@ -30,6 +28,7 @@ class CreateReservationsTable extends Migration
             $table->string('remarks')->nullable();
             $table->string('status')->default('reserved');
             $table->unsignedInteger('user_id');
+            $table->datetime('confirmed_at')->nullable();
             $table->timestamps();
         });
     }

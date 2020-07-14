@@ -20,6 +20,24 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('secret')
         ]);
 
+        App\Room::create([
+            'no' => '1',
+            'floor' => '1',
+            'type' => 'Standard',
+            'capacity' => 5,
+            'default_amount' => 500,
+            'user_id' => 1
+        ]);
+
+        App\Room::create([
+            'no' => '2',
+            'floor' => '1',
+            'type' => 'Standard',
+            'capacity' => 5,
+            'default_amount' => 1000,
+            'user_id' => 1
+        ]);
+
         factory('App\Account', 10)->create();
     }
 }

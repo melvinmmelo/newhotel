@@ -36,8 +36,6 @@ class ReservationController extends Controller
             'account_id' => 'required|numeric',
             'company_id' => 'nullable|numeric',
             'travel_agent_id' => 'nullable|numeric',
-            'arrival_date' => 'date',
-            'departure_date' => 'date|after:arrival_date',
             'adult_no' => 'required|numeric',
             'child_no' => 'required|numeric',
             'payment_mode' => 'required|min:1|max:191',
@@ -75,20 +73,23 @@ class ReservationController extends Controller
                 $errors['message'] = 'Actual Arrival Date is required!';
             }
         }
+        if(request()->input('status') == "Confirmed"){
+            $addDetails = array("user_id" => Auth::user()->id, "confirmed_at" => Carbon::now());
+        }else{
+            $addDetails = array("user_id" => Auth::user()->id);
+        }
 
         if($errors['message'] != ""){
             return response()->json($errors, 422);
         }
 
-
-
-        $addDetails = array("user_id" => Auth::user()->id);
         request()->merge($addDetails);
 
         $vData = $this->validate(request(), [
             'status' => 'required|max:191',
             'actual_arrival_date' => 'nullable|date',
             'actual_departure_date' => 'nullable|date',
+            'confirmed_at' => 'nullable|date',
             'remarks' => 'nullable|max:191',
             'user_id' => 'required',
         ]);

@@ -33,8 +33,34 @@
 
       <span
         class="text-danger"
-        v-if="form.errors.any('room_no')"
-        v-text="form.errors.get('room_no')"
+        v-if="form.errors.any('room_id')"
+        v-text="form.errors.get('room_id')"
+      ></span>
+    </div>
+
+    <div class="form-group">
+      <label for="arrival_date">Arrival Date</label>
+      <vue-ctk-date-time-picker
+        v-model="form.arrival_date"
+        format="YYYY-MM-DD HH:mm:ss"
+      ></vue-ctk-date-time-picker>
+
+      <span
+        class="text-danger"
+        v-if="form.errors.any('arrival_date')"
+        v-text="form.errors.get('arrival_date')"
+      ></span>
+    </div>
+    <div class="form-group">
+      <label for="departure_date">Departure Date</label>
+      <vue-ctk-date-time-picker
+        v-model="form.departure_date"
+        format="YYYY-MM-DD HH:mm:ss"
+      ></vue-ctk-date-time-picker>
+      <span
+        class="text-danger"
+        v-if="form.errors.any('departure_date')"
+        v-text="form.errors.get('departure_date')"
       ></span>
     </div>
 
@@ -63,7 +89,8 @@
 <script>
 import Multiselect from "vue-multiselect";
 import Form from "../../core/Form.js";
-
+import VueCtkDateTimePicker from "vue-ctk-date-time-picker";
+import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css";
 export default {
   props: ["reservationId"],
   data() {
@@ -72,6 +99,8 @@ export default {
         reservation_id: this.reservationId,
         room_id: "",
         amount: "",
+        arrival_date: "",
+        departure_date: "",
         reset: false
       }),
       buttonToggle: true,
@@ -80,16 +109,19 @@ export default {
     };
   },
   components: {
-    Multiselect
+    Multiselect,
+    VueCtkDateTimePicker
   },
   methods: {
     handleSubmit() {
       this.form
         .submit("post", "/reservation/room/create")
         .then(response => {
+          console.log(response);
           this.rooms = this.rooms.filter(function(e) {
             return e.id != response.room_id;
           });
+
           alert("Room has been successfully reserved!");
         })
         .catch(errors => console.log(errors));
@@ -106,6 +138,7 @@ export default {
     },
     onSelectRoom(selectedItem) {
       this.form.room_id = selectedItem.id;
+      this.form.amount = selectedItem.default_amount;
     }
   },
   created() {

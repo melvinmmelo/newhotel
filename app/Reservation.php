@@ -9,7 +9,7 @@ class Reservation extends Model
     //
     protected $guarded = [];
 
-    protected $with = ['account', 'company', 'travelAgent'];
+    protected $with = ['account', 'company', 'travelAgent', 'reservedRooms'];
 
     public function account()
     {
@@ -26,8 +26,8 @@ class Reservation extends Model
         return $this->belongsTo(TravelAgent::class);
     }
 
-    public function rooms()
+    public function reservedRooms()
     {
-        return $this->hasMany(Room::class);
+        return $this->hasMany(ReservedRoom::class);
     }
 }

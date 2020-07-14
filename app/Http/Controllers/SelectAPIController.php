@@ -19,46 +19,46 @@ class SelectAPIController extends Controller
 
     public function reservations(){
         $reservations = Reservation::all();
-        return response()->json($reservations, 200);
+        return response()->json($reservations, 201);
     }
 
     public function accounts(){
         $accounts = Account::all();
-        return response()->json($accounts, 200);
+        return response()->json($accounts, 201);
     }
 
     public function companies(){
         $companies = Company::all();
-        return response()->json($companies, 200);
+        return response()->json($companies, 201);
     }
 
     public function travelAgents(){
         $travelAgents = TravelAgent::all();
-        return response()->json($travelAgents, 200);
+        return response()->json($travelAgents, 201);
     }
 
     public function rooms(){
         $rooms = Room::all();
-        return response()->json($rooms, 200);
+        return response()->json($rooms, 201);
     }
 
     public function getReservedRooms($id){
         $rooms = ReservedRoom::where('reservation_id', $id)->get();
-        return response()->json($rooms, 200);
+        return response()->json($rooms, 201);
     }
 
     public function transactions(){
         $transactions = Transaction::all();
-        return response()->json($transactions, 200);
+        return response()->json($transactions, 201);
     }
 
     public function promos(){
         $promos = Promo::all();
-        return response()->json($promos, 200);
+        return response()->json($promos, 201);
     }
 
     public function services(){
         $services = Service::all();
-        return response()->json($services, 200);
+        return response()->json($services, 201);
     }
 }

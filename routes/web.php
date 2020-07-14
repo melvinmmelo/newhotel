@@ -46,8 +46,7 @@ Route::post('/reservation/room/create', 'ReservedRoomController@reserveRoom');
 // transaction
 Route::get('/transactions', 'TransactionController@list')->name('transactions');
 Route::post('/transaction/create', 'TransactionController@save');
-// guest transaction
-Route::post('/guest/transaction/create', 'GuestTransactionController@save');
+
 
 // promos
 Route::get('/promos', 'PromoController@list')->name('promos');
@@ -56,5 +55,11 @@ Route::post('/promo/create', 'PromoController@save');
 // promos
 Route::get('/services', 'ServiceController@list')->name('services');
 Route::post('/service/create', 'ServiceController@save');
+
+// guest transaction
+Route::post('/guest/transaction/create', 'GuestTransactionController@save');
+
+// guest transaction
+Route::post('/guest/service/create', 'GuestServiceController@save');
 
 
