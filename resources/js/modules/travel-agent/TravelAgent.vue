@@ -1,6 +1,14 @@
 <template>
   <div>
     <div class="row">
+      <div class="col-md-4">
+        <card>
+          <template slot="header">Add Here</template>
+          <template slot="body">
+            <travel-agent-form v-on:dateIn="applied"></travel-agent-form>
+          </template>
+        </card>
+      </div>
       <div class="col-md-8">
         <card>
           <template slot="header">Travel Agent List</template>
@@ -12,14 +20,7 @@
         </card>
       </div>
 
-      <div class="col-md-4">
-        <card>
-          <template slot="header">Add Here</template>
-          <template slot="body">
-            <travel-agent-form v-on:dateIn="applied"></travel-agent-form>
-          </template>
-        </card>
-      </div>
+
     </div>
   </div>
 </template>

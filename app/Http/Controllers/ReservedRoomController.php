@@ -15,10 +15,11 @@ class ReservedRoomController extends Controller
 
         $vData = $this->validate(request(), [
             'reservation_id' => 'required|numeric',
-            'room_id' => 'required|numeric|exists:rooms,id',
+            'room_id' => 'required|exists:rooms,id',
             'arrival_date' => 'date',
             'departure_date' => 'date|after:arrival_date',
             'amount' => 'required|numeric',
+            'rate_type' => 'required',
         ]);
 
         $reservationWithRoom = ReservedRoom::where(['reservation_id' => request('reservation_id'),
@@ -33,7 +34,6 @@ class ReservedRoomController extends Controller
         $check = [];
 
         foreach($reservationDates as $rDate){
-
             if ((request('arrival_date') >= $rDate->arrival_date) && (request('arrival_date') <= $rDate->departure_date)){
                 $check[] = "Record";
             }

@@ -1,9 +1,18 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
+
+    <div class="row mb-2 justify-content-center">
+
+      <!-- <div class="asf">Test</div> -->
+      <div class="col-lg-6 col-sm-12">
+         <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="/reservations">Reservations</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Create</li>
+        </ol>
+      </nav>
         <card>
-          <template slot="header">Add Reservation General Details</template>
           <template slot="body">
             <reservation-form
               v-on:submitReservation="handleSubmitReservation"
@@ -11,7 +20,10 @@
           </template>
         </card>
       </div>
-      <div class="col">
+    </div>
+    <div class="row mb-2 justify-content-center">
+      <!-- <div class="asf">Test</div> -->
+      <div class="col-lg-6 col-sm-12">
         <card>
           <template slot="header">Add Room</template>
           <template slot="body">

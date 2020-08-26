@@ -6,3 +6,5 @@
 June 27, 2020
 
 A Project for UB CTHM
+
+All changes were based on the recordings last week.

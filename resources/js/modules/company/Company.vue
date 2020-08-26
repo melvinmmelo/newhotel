@@ -1,6 +1,15 @@
 <template>
   <div>
     <div class="row">
+       <div class="col-md-4">
+        <card>
+          <template slot="header">Add Here</template>
+          <template slot="body">
+            <company-form v-on:dateIn="applied"></company-form>
+          </template>
+        </card>
+      </div>
+
       <div class="col-md-8">
         <card>
           <template slot="header">Company List</template>
@@ -10,14 +19,7 @@
         </card>
       </div>
 
-      <div class="col-md-4">
-        <card>
-          <template slot="header">Add Here</template>
-          <template slot="body">
-            <company-form v-on:dateIn="applied"></company-form>
-          </template>
-        </card>
-      </div>
+
     </div>
   </div>
 </template>

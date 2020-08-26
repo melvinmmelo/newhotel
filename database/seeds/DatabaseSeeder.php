@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
 
         App\Room::create([
             'no' => '1',
-            'floor' => '1',
+            'floor' => '201',
             'type' => 'Standard',
             'capacity' => 5,
             'default_amount' => 500,
@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         App\Room::create([
-            'no' => '2',
+            'no' => '202',
             'floor' => '1',
             'type' => 'Standard',
             'capacity' => 5,

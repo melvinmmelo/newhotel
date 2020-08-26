@@ -2323,6 +2323,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["account"],
@@ -2364,16 +2370,8 @@ __webpack_require__.r(__webpack_exports__);
         alert(errors.message);
       });
     },
-    changeName: function changeName() {
-      this.form.last_name = this.form.last_name;
-    }
-  },
-  computed: {
-    account_name: {
-      get: function get() {
-        return this.account.last_name + " " + this.account.first_name + " " + this.account.middle_name;
-      },
-      set: function set() {}
+    setAccountName: function setAccountName() {
+      this.form.account_name = this.form.last_name + " " + this.form.first_name + " " + this.form.middle_name;
     }
   }
 });
@@ -2437,7 +2435,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.localAccounts = this.accounts;
-    console.log(this.accounts);
   }
 });
 
@@ -2454,6 +2451,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CompanyForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CompanyForm.vue */ "./resources/js/modules/company/CompanyForm.vue");
 /* harmony import */ var _CompanyList_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CompanyList.vue */ "./resources/js/modules/company/CompanyList.vue");
+//
+//
 //
 //
 //
@@ -2893,6 +2892,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2932,6 +2943,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _core_Form_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../core/Form.js */ "./resources/js/core/Form.js");
+/* harmony import */ var vue_ctk_date_time_picker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-ctk-date-time-picker */ "./node_modules/vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.common.js");
+/* harmony import */ var vue_ctk_date_time_picker__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_ctk_date_time_picker__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_ctk_date_time_picker_dist_vue_ctk_date_time_picker_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css */ "./node_modules/vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css");
+/* harmony import */ var vue_ctk_date_time_picker_dist_vue_ctk_date_time_picker_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_ctk_date_time_picker_dist_vue_ctk_date_time_picker_css__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -3079,6 +3094,131 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3094,6 +3234,14 @@ __webpack_require__.r(__webpack_exports__);
         purpose: "",
         remarks: "",
         user_id: "",
+        arrival_date: "",
+        departure_date: "",
+        cc_no: "",
+        cc_exp_date: "",
+        ccv: "",
+        cheque_bank: "",
+        cheque_no: "",
+        cheque_amount: "",
         reset: false
       }),
       account: [],
@@ -3101,11 +3249,14 @@ __webpack_require__.r(__webpack_exports__);
       travelAgent: [],
       accounts: [],
       travelAgents: [],
-      companies: []
+      companies: [],
+      showCreditCardForm: false,
+      showChequeForm: false
     };
   },
   components: {
-    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default.a
+    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default.a,
+    VueCtkDateTimePicker: vue_ctk_date_time_picker__WEBPACK_IMPORTED_MODULE_2___default.a
   },
   methods: {
     handleSubmit: function handleSubmit() {
@@ -3159,6 +3310,19 @@ __webpack_require__.r(__webpack_exports__);
     },
     onSelectTA: function onSelectTA(selectedItem) {
       this.form.travel_agent_id = selectedItem.id;
+    },
+    togglePaymentForm: function togglePaymentForm() {
+      if (this.form.payment_mode == 'Credit Card') {
+        this.showCreditCardForm = true;
+      } else {
+        this.showCreditCardForm = false;
+      }
+
+      if (this.form.payment_mode == 'Cheque') {
+        this.showChequeForm = true;
+      } else {
+        this.showChequeForm = false;
+      }
     }
   },
   created: function created() {
@@ -3191,6 +3355,276 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _room_RoomList__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../room/RoomList */ "./resources/js/modules/room/RoomList.vue");
 /* harmony import */ var _room_GuestRoom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../room/GuestRoom */ "./resources/js/modules/room/GuestRoom.vue");
 /* harmony import */ var _service_GuestServiceForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../service/GuestServiceForm */ "./resources/js/modules/service/GuestServiceForm.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3398,7 +3832,15 @@ __webpack_require__.r(__webpack_exports__);
         actual_arrival_date: "",
         remarks: ""
       }),
-      reservedRooms: []
+      reservedRooms: [],
+      status: 'TENTATIVE',
+      keyGuestName: "",
+      showBIModal: false,
+      showRCModal: false,
+      showPrModal: false,
+      showIncModal: false,
+      showExtPerModal: false,
+      showRouTransModal: false
     };
   },
   methods: {
@@ -3435,6 +3877,9 @@ __webpack_require__.r(__webpack_exports__);
       var id = _ref.id,
           account = _ref.account;
       return "".concat(account.last_name, ", ").concat(account.first_name, " - ").concat(id);
+    },
+    viewReservation: function viewReservation(reservation) {
+      this.reservation = reservation;
     }
   },
   created: function created() {
@@ -3445,6 +3890,19 @@ __webpack_require__.r(__webpack_exports__);
       return this.localReservations.filter(function (reservation) {
         return reservation.status == "Checked In";
       });
+    },
+    filteredByStatusReservations: function filteredByStatusReservations() {
+      var _this3 = this;
+
+      if (this.keyGuestName != "") {
+        return this.localReservations.filter(function (reservation) {
+          return reservation.account.last_name == _this3.keyGuestName;
+        });
+      } else {
+        return this.localReservations.filter(function (reservation) {
+          return reservation.status == _this3.status;
+        });
+      }
     }
   }
 });
@@ -3555,6 +4013,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3567,13 +4036,14 @@ __webpack_require__.r(__webpack_exports__);
         reservation_id: this.reservationId,
         room_id: "",
         amount: "",
-        arrival_date: "",
-        departure_date: "",
+        rate_type: "",
+        total_amount: 0,
         reset: false
       }),
       buttonToggle: true,
       room: "",
-      rooms: []
+      rooms: [],
+      selectedRoomKey: 0
     };
   },
   components: {
@@ -3581,6 +4051,13 @@ __webpack_require__.r(__webpack_exports__);
     VueCtkDateTimePicker: vue_ctk_date_time_picker__WEBPACK_IMPORTED_MODULE_2___default.a
   },
   methods: {
+    makePrimary: function makePrimary(key) {
+      if (this.selectedRoomKey == key) {
+        return 'btn-danger';
+      } else {
+        return 'btn-secondary';
+      }
+    },
     handleSubmit: function handleSubmit() {
       var _this = this;
 
@@ -3606,6 +4083,10 @@ __webpack_require__.r(__webpack_exports__);
     onSelectRoom: function onSelectRoom(selectedItem) {
       this.form.room_id = selectedItem.id;
       this.form.amount = selectedItem.default_amount;
+    },
+    setClassBtnRoom: function setClassBtnRoom(item, key) {
+      this.selectedRoomKey = key;
+      this.form.room_id = item.id;
     }
   },
   created: function created() {
@@ -4617,6 +5098,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TravelAgentForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TravelAgentForm.vue */ "./resources/js/modules/travel-agent/TravelAgentForm.vue");
 /* harmony import */ var _TravelAgentList_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TravelAgentList.vue */ "./resources/js/modules/travel-agent/TravelAgentList.vue");
+//
 //
 //
 //
@@ -9317,6 +9799,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, "\n.modal-active {\n  background-color: rgba(0, 0, 0, 0.5);\n  display: block;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/reservation/ReserveRoomForm.vue?vue&type=style&index=0&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/reservation/ReserveRoomForm.vue?vue&type=style&index=0&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Hiding the checkbox, but allowing it to be focused */\n.badgebox\n{\n    opacity: 0;\n}\n.badgebox + .badge\n{\n    /* Move the check mark away when unchecked */\n    text-indent: -999999px;\n    /* Makes the badge's width stay the same checked and unchecked */\n\twidth: 27px;\n}\n.badgebox:focus + .badge\n{\n    /* Set something to make the badge looks focused */\n    /* This really depends on the application, in my case it was: */\n\n    /* Adding a light border */\n    box-shadow: inset 0px 0px 5px;\n    /* Taking the difference out of the padding */\n}\n.badgebox:checked + .badge\n{\n    /* Move the check mark back when checked */\n\ttext-indent: 0;\n}\n", ""]);
 
 // exports
 
@@ -23340,6 +23841,36 @@ options.transform = transform
 options.insertInto = undefined;
 
 var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/reservation/ReserveRoomForm.vue?vue&type=style&index=0&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/reservation/ReserveRoomForm.vue?vue&type=style&index=0&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ReserveRoomForm.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/reservation/ReserveRoomForm.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -50481,7 +51012,13 @@ var render = function() {
               _vm._v(" "),
               _c("option", { attrs: { value: "Mr." } }, [_vm._v("Mr.")]),
               _vm._v(" "),
-              _c("option", { attrs: { value: "Mrs." } }, [_vm._v("Mrs.")])
+              _c("option", { attrs: { value: "Mrs." } }, [_vm._v("Mrs.")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "Mrs." } }, [_vm._v("Dr.")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "Mrs." } }, [_vm._v("Engr.")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "Mrs." } }, [_vm._v("Atty.")])
             ]
           ),
           _vm._v(" "),
@@ -50506,10 +51043,14 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text", name: "last_name", id: "last_name" },
+            attrs: {
+              type: "text",
+              name: "last_name",
+              id: "last_name",
+              keyup: _vm.setAccountName()
+            },
             domProps: { value: _vm.form.last_name },
             on: {
-              keyup: _vm.changeName,
               input: function($event) {
                 if ($event.target.composing) {
                   return
@@ -50542,7 +51083,12 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text", name: "first_name", id: "first_name" },
+            attrs: {
+              type: "text",
+              name: "first_name",
+              id: "first_name",
+              keydown: _vm.setAccountName()
+            },
             domProps: { value: _vm.form.first_name },
             on: {
               input: function($event) {
@@ -50579,7 +51125,12 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text", name: "middle_name", id: "middle_name" },
+            attrs: {
+              type: "text",
+              name: "middle_name",
+              id: "middle_name",
+              keydown: _vm.setAccountName()
+            },
             domProps: { value: _vm.form.middle_name },
             on: {
               input: function($event) {
@@ -50603,7 +51154,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
           _c("label", { attrs: { for: "account_name" } }, [
-            _vm._v("Account Name")
+            _vm._v("Guest Name")
           ]),
           _vm._v(" "),
           _c("input", {
@@ -50616,7 +51167,12 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text", name: "account_name", id: "account_name" },
+            attrs: {
+              type: "text",
+              name: "account_name",
+              id: "account_name",
+              readonly: ""
+            },
             domProps: { value: _vm.form.account_name },
             on: {
               input: function($event) {
@@ -51332,7 +51888,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Account Name")]),
+        _c("th", [_vm._v("Guest Name")]),
         _vm._v(" "),
         _c("th", [_vm._v("Title")]),
         _vm._v(" "),
@@ -51378,6 +51934,28 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
+        { staticClass: "col-md-4" },
+        [
+          _c(
+            "card",
+            [
+              _c("template", { slot: "header" }, [_vm._v("Add Here")]),
+              _vm._v(" "),
+              _c(
+                "template",
+                { slot: "body" },
+                [_c("company-form", { on: { dateIn: _vm.applied } })],
+                1
+              )
+            ],
+            2
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
         { staticClass: "col-md-8" },
         [
           _c(
@@ -51393,28 +51971,6 @@ var render = function() {
                     attrs: { companies: _vm.localCompanies }
                   })
                 ],
-                1
-              )
-            ],
-            2
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-4" },
-        [
-          _c(
-            "card",
-            [
-              _c("template", { slot: "header" }, [_vm._v("Add Here")]),
-              _vm._v(" "),
-              _c(
-                "template",
-                { slot: "body" },
-                [_c("company-form", { on: { dateIn: _vm.applied } })],
                 1
               )
             ],
@@ -51956,18 +52512,16 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "row mb-2 justify-content-center" }, [
       _c(
         "div",
-        { staticClass: "col" },
+        { staticClass: "col-lg-6 col-sm-12" },
         [
+          _vm._m(0),
+          _vm._v(" "),
           _c(
             "card",
             [
-              _c("template", { slot: "header" }, [
-                _vm._v("Add Reservation General Details")
-              ]),
-              _vm._v(" "),
               _c(
                 "template",
                 { slot: "body" },
@@ -51983,11 +52537,13 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row mb-2 justify-content-center" }, [
       _c(
         "div",
-        { staticClass: "col" },
+        { staticClass: "col-lg-6 col-sm-12" },
         [
           _c(
             "card",
@@ -52013,7 +52569,35 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("nav", { attrs: { "aria-label": "breadcrumb" } }, [
+      _c("ol", { staticClass: "breadcrumb" }, [
+        _c("li", { staticClass: "breadcrumb-item" }, [
+          _c("a", { attrs: { href: "#" } }, [_vm._v("Home")])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "breadcrumb-item" }, [
+          _c("a", { attrs: { href: "/reservations" } }, [
+            _vm._v("Reservations")
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "li",
+          {
+            staticClass: "breadcrumb-item active",
+            attrs: { "aria-current": "page" }
+          },
+          [_vm._v("Create")]
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -52036,6 +52620,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
     _c(
       "form",
       {
@@ -52054,7 +52640,7 @@ var render = function() {
           "div",
           { staticClass: "form-group" },
           [
-            _c("label", { attrs: { for: "name" } }, [_vm._v("Account")]),
+            _c("label", { attrs: { for: "name" } }, [_vm._v("Guest Name")]),
             _vm._v(" "),
             _c("multiselect", {
               attrs: {
@@ -52158,10 +52744,70 @@ var render = function() {
           1
         ),
         _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group" },
+          [
+            _c("label", { attrs: { for: "arrival_date" } }, [
+              _vm._v("Arrival Date")
+            ]),
+            _vm._v(" "),
+            _c("vue-ctk-date-time-picker", {
+              attrs: { format: "YYYY-MM-DD HH:mm:ss" },
+              model: {
+                value: _vm.form.arrival_date,
+                callback: function($$v) {
+                  _vm.$set(_vm.form, "arrival_date", $$v)
+                },
+                expression: "form.arrival_date"
+              }
+            }),
+            _vm._v(" "),
+            _vm.form.errors.any("arrival_date")
+              ? _c("span", {
+                  staticClass: "text-danger",
+                  domProps: {
+                    textContent: _vm._s(_vm.form.errors.get("arrival_date"))
+                  }
+                })
+              : _vm._e()
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group" },
+          [
+            _c("label", { attrs: { for: "departure_date" } }, [
+              _vm._v("Departure Date")
+            ]),
+            _vm._v(" "),
+            _c("vue-ctk-date-time-picker", {
+              attrs: { format: "YYYY-MM-DD HH:mm:ss" },
+              model: {
+                value: _vm.form.departure_date,
+                callback: function($$v) {
+                  _vm.$set(_vm.form, "departure_date", $$v)
+                },
+                expression: "form.departure_date"
+              }
+            }),
+            _vm._v(" "),
+            _vm.form.errors.any("departure_date")
+              ? _c("span", {
+                  staticClass: "text-danger",
+                  domProps: {
+                    textContent: _vm._s(_vm.form.errors.get("departure_date"))
+                  }
+                })
+              : _vm._e()
+          ],
+          1
+        ),
+        _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "adult_no" } }, [
-            _vm._v("No. of adults")
-          ]),
+          _c("label", { attrs: { for: "adult_no" } }, [_vm._v("No. of adult")]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -52249,21 +52895,24 @@ var render = function() {
               staticClass: "form-control",
               attrs: { name: "payment_mode", id: "payment_mode" },
               on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.$set(
-                    _vm.form,
-                    "payment_mode",
-                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                  )
-                }
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.form,
+                      "payment_mode",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  },
+                  _vm.togglePaymentForm
+                ]
               }
             },
             [
@@ -52271,13 +52920,15 @@ var render = function() {
               _vm._v(" "),
               _c("option", { attrs: { value: "Cash" } }, [_vm._v("Cash")]),
               _vm._v(" "),
+              _c("option", { attrs: { value: "Cash" } }, [
+                _vm._v("Debit Card")
+              ]),
+              _vm._v(" "),
               _c("option", { attrs: { value: "Credit Card" } }, [
                 _vm._v("Credit Card")
               ]),
               _vm._v(" "),
-              _c("option", { attrs: { value: "Deposit" } }, [
-                _vm._v("Bank Deposit")
-              ])
+              _c("option", { attrs: { value: "Cheque" } }, [_vm._v("Cheque")])
             ]
           ),
           _vm._v(" "),
@@ -52291,30 +52942,306 @@ var render = function() {
             : _vm._e()
         ]),
         _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.showCreditCardForm,
+                expression: "showCreditCardForm"
+              }
+            ],
+            attrs: { id: "creditCard" }
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "payment_mode" } }, [
+                _vm._v("Card No.")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.cc_no,
+                    expression: "form.cc_no"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.cc_no },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "cc_no", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.form.errors.any("cc_no")
+                ? _c("span", {
+                    staticClass: "text-danger",
+                    domProps: {
+                      textContent: _vm._s(_vm.form.errors.get("cc_no"))
+                    }
+                  })
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "payment_mode" } }, [
+                _vm._v("Expiry Date")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.cc_exp_date,
+                    expression: "form.cc_exp_date"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.cc_exp_date },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "cc_exp_date", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.form.errors.any("cc_exp_date")
+                ? _c("span", {
+                    staticClass: "text-danger",
+                    domProps: {
+                      textContent: _vm._s(_vm.form.errors.get("cc_exp_date"))
+                    }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "payment_mode" } }, [_vm._v("CCV")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.ccv,
+                    expression: "form.ccv"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.ccv },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "ccv", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.form.errors.any("ccv")
+                ? _c("span", {
+                    staticClass: "text-danger",
+                    domProps: {
+                      textContent: _vm._s(_vm.form.errors.get("ccv"))
+                    }
+                  })
+                : _vm._e()
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.showChequeForm,
+                expression: "showChequeForm"
+              }
+            ],
+            attrs: { id: "cheque" }
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "payment_mode" } }, [_vm._v("Bank")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.cheque_bank,
+                    expression: "form.cheque_bank"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.cheque_bank },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "cheque_bank", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.form.errors.any("cheque_bank")
+                ? _c("span", {
+                    staticClass: "text-danger",
+                    domProps: {
+                      textContent: _vm._s(_vm.form.errors.get("cheque_bank"))
+                    }
+                  })
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "payment_mode" } }, [
+                _vm._v("Cheque No.")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.cheque_no,
+                    expression: "form.cheque_no"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.cheque_no },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "cheque_no", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.form.errors.any("cheque_no")
+                ? _c("span", {
+                    staticClass: "text-danger",
+                    domProps: {
+                      textContent: _vm._s(_vm.form.errors.get("cheque_no"))
+                    }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "payment_mode" } }, [
+                _vm._v("Cheque Amount")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.cheque_amount,
+                    expression: "form.cheque_amount"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.cheque_amount },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "cheque_amount", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.form.errors.any("cheque_amount")
+                ? _c("span", {
+                    staticClass: "text-danger",
+                    domProps: {
+                      textContent: _vm._s(_vm.form.errors.get("cheque_amount"))
+                    }
+                  })
+                : _vm._e()
+            ])
+          ]
+        ),
+        _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
           _c("label", { attrs: { for: "purpose" } }, [_vm._v("Purpose")]),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.purpose,
-                expression: "form.purpose"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", name: "purpose", id: "purpose" },
-            domProps: { value: _vm.form.purpose },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.purpose,
+                  expression: "form.purpose"
                 }
-                _vm.$set(_vm.form, "purpose", $event.target.value)
+              ],
+              staticClass: "form-control",
+              attrs: { name: "", id: "" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.form,
+                    "purpose",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
               }
-            }
-          }),
+            },
+            [
+              _c("option", { attrs: { value: "Corporate" } }, [
+                _vm._v("Corporate")
+              ]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "Group" } }, [_vm._v("Group")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "Travel" } }, [_vm._v("Travel")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "Business" } }, [
+                _vm._v("Business")
+              ]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "Personal" } }, [
+                _vm._v("Personal")
+              ]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "Other" } }, [_vm._v("Other")])
+            ]
+          ),
           _vm._v(" "),
           _vm.form.errors.any("purpose")
             ? _c("span", {
@@ -52364,13 +53291,67 @@ var render = function() {
         _c(
           "button",
           { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [_vm._v("\n      Submit\n    ")]
+          [_vm._v("\n        Reserve\n      ")]
         )
       ]
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "alert alert-danger alert-dismissible fade show",
+        attrs: { role: "alert" }
+      },
+      [
+        _c("div", [
+          _c("a", { attrs: { href: "/accounts" } }, [
+            _vm._v("New guest? Click to add.")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("a", { attrs: { href: "/companies" } }, [
+            _vm._v("New company? Click to add.")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("a", { attrs: { href: "/travel-agents" } }, [
+            _vm._v("New travel agent? Click to add.")
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "close",
+            attrs: {
+              type: "button",
+              "data-dismiss": "alert",
+              "aria-label": "Close"
+            }
+          },
+          [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+        ),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _c("h4", { staticClass: "alert-heading" }, [
+          _c("strong", { staticClass: "text-danger" }, [_vm._v("!!!")]),
+          _vm._v(
+            " Add the details first to the master record, before reservation."
+          )
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -52394,126 +53375,442 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "table-responsive" },
+    {},
     [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-primary mb-2",
-          on: {
-            click: function($event) {
-              _vm.showUpdateReservationModal = true
-            }
-          }
-        },
-        [_vm._v("Update Status")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-danger mb-2",
-          on: {
-            click: function($event) {
-              _vm.showAddTransactionModal = true
-            }
-          }
-        },
-        [_vm._v("Add Transaction")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-danger mb-2",
-          on: {
-            click: function($event) {
-              _vm.showAddServiceModal = true
-            }
-          }
-        },
-        [_vm._v("Add Service")]
-      ),
-      _vm._v(" "),
       _c("div", { staticClass: "row" }, [
-        _c("table", { staticClass: "table table-hover" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.localReservations, function(item, key) {
-              return _c("tr", { key: key }, [
-                _c("td", [_vm._v(_vm._s(item.id))]),
-                _vm._v(" "),
-                _c("td", [
-                  _vm._v(
-                    "\n            " +
-                      _vm._s(
-                        item.account.last_name + " " + item.account.first_name
-                      ) +
-                      "\n          "
-                  )
+        _c("div", { staticClass: "col-lg-4 col-sm-4 mb-2" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("h5", { staticClass: "card-title" }, [_vm._v("Tools")]),
+              _vm._v(" "),
+              _c("h6", { staticClass: "card-subtitle mb-2 text-muted" }, [
+                _vm._v("You can add or update reservations here.")
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary mb-2",
+                  on: {
+                    click: function($event) {
+                      _vm.showUpdateReservationModal = true
+                    }
+                  }
+                },
+                [_vm._v("Update Status")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary mb-2",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.showBIModal = true
+                    }
+                  }
+                },
+                [_vm._v("Billing Instruction")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary mb-2",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.showRCModal = true
+                    }
+                  }
+                },
+                [_vm._v("Recurring Charges")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary mb-2",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.showPrModal = true
+                    }
+                  }
+                },
+                [_vm._v("Promos")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary mb-2",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.showIncModal = true
+                    }
+                  }
+                },
+                [_vm._v("Inclusions")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary mb-2",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.showExtPerModal = true
+                    }
+                  }
+                },
+                [_vm._v("Extra Person")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary mb-2",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.showRouTransModal = true
+                    }
+                  }
+                },
+                [_vm._v("Routed Transaction")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "" } }, [
+                  _vm._v("Filter by status")
                 ]),
                 _vm._v(" "),
-                _c("td", [
-                  _vm._v(_vm._s(item.adult_no + " | " + item.child_no))
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  item.company
-                    ? _c("span", [_vm._v(_vm._s(item.company.name) + " ")])
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  item.travel_agent
-                    ? _c("span", [_vm._v(_vm._s(item.travel_agent.name))])
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(item.payment_mode))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(item.status))]),
-                _vm._v(" "),
-                _c("td", [
-                  _vm._v(_vm._s(item.created_at + " | " + item.updated_at))
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("div", { staticClass: "btn-group" }, [
-                    _c(
-                      "button",
+                _c(
+                  "select",
+                  {
+                    directives: [
                       {
-                        staticClass: "btn btn-secondary btn-sm",
-                        attrs: { type: "button" }
-                      },
-                      [_vm._v("\n                Action\n              ")]
-                    ),
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.status,
+                        expression: "status"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "", id: "" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.status = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "TENTATIVE" } }, [
+                      _vm._v("TENTATIVE")
+                    ]),
                     _vm._v(" "),
-                    _vm._m(1, true),
+                    _c("option", { attrs: { value: "CONFIRMED" } }, [
+                      _vm._v("CONFIRMED")
+                    ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "dropdown-menu" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "dropdown-item",
-                          on: {
-                            click: function($event) {
-                              _vm.showRoomModal = true
-                              _vm.fetchReservedRooms(item.reserved_rooms)
-                            }
-                          }
-                        },
-                        [_vm._v("Rooms")]
-                      )
+                    _c("option", { attrs: { value: "CHECKED IN" } }, [
+                      _vm._v("CHECKED IN")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "CHECKED OUT" } }, [
+                      _vm._v("CHECKED OUT")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "NO SHOW" } }, [
+                      _vm._v("NO SHOW")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "CANCELLED" } }, [
+                      _vm._v("CANCELLED")
                     ])
-                  ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "" } }, [
+                  _vm._v("Search By Guest Last Name")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.keyGuestName,
+                      expression: "keyGuestName"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    keydown: _vm.filteredByStatusReservations
+                  },
+                  domProps: { value: _vm.keyGuestName },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.keyGuestName = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-8 col-sm-8" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("table", { staticClass: "table" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.filteredByStatusReservations, function(
+                      item,
+                      key
+                    ) {
+                      return _c("tr", { key: key }, [
+                        _c("td", [_vm._v(_vm._s(item.id))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n              " +
+                              _vm._s(
+                                item.account.last_name +
+                                  " " +
+                                  item.account.first_name
+                              ) +
+                              "\n            "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.status))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(item.created_at + " | " + item.updated_at)
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "btn-group" }, [
+                            _c(
+                              "a",
+                              {
+                                on: {
+                                  click: function($event) {
+                                    return _vm.viewReservation(item)
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-secondary btn-sm",
+                                    attrs: { type: "button" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                  View\n                "
+                                    )
+                                  ]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._m(1, true),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "dropdown-menu" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "dropdown-item",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.showRoomModal = true
+                                      _vm.fetchReservedRooms(
+                                        item.reserved_rooms
+                                      )
+                                    }
+                                  }
+                                },
+                                [_vm._v("Rooms")]
+                              )
+                            ])
+                          ])
+                        ])
+                      ])
+                    }),
+                    0
+                  )
                 ])
               ])
-            }),
-            0
-          )
+            ])
+          ])
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-8 col-sm-8" }, [
+          _c("div", { staticClass: "card mb-2" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v("\n    Reservation Details\n  ")
+            ]),
+            _vm._v(" "),
+            _vm.reservation
+              ? _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-lg-6" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _vm._v(
+                          "\n          Guest Name:\n          " +
+                            _vm._s(_vm.reservation.account.account_name) +
+                            "\n        "
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-6" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _vm._v("\n          Status:\n          "),
+                        _c(
+                          "span",
+                          {
+                            staticClass: "badge badge-danger",
+                            attrs: { for: "" }
+                          },
+                          [_vm._v(_vm._s(_vm.reservation.status))]
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _vm._v(
+                      "\n      Arrival and Departure Date: " +
+                        _vm._s(
+                          _vm.reservation.arrival_date +
+                            "-" +
+                            _vm.reservation.departure_date
+                        ) +
+                        "\n    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _vm._v(
+                      "\n      Adult | Child: " +
+                        _vm._s(
+                          _vm.reservation.adult_no +
+                            " | " +
+                            _vm.reservation.child_no
+                        ) +
+                        "\n    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _vm._v(
+                      "\n      Payment Mode: " +
+                        _vm._s(_vm.reservation.payment_mode) +
+                        "\n    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _vm._v("\n      Rooms\n      "),
+                    _c(
+                      "ul",
+                      _vm._l(_vm.reservedRooms, function(room, key) {
+                        return _c("li", {
+                          key: key,
+                          domProps: { textContent: _vm._s(room.no) }
+                        })
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _vm._v(
+                        "\n      Purpose: " +
+                          _vm._s(_vm.reservation.purpose) +
+                          "\n    "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _vm._v(
+                        "\n      Remarks: " +
+                          _vm._s(_vm.reservation.remarks) +
+                          "\n    "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _vm._v(
+                        "\n      Confirmed at: " +
+                          _vm._s(_vm.reservation.confirmed_at) +
+                          "\n    "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _vm._v(
+                        "\n      Last Modified: " +
+                          _vm._s(_vm.reservation.updated_at) +
+                          "\n    "
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary mb-2",
+                      attrs: { type: "button" }
+                    },
+                    [_vm._v("Update")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary mb-2",
+                      attrs: { type: "button" }
+                    },
+                    [_vm._v("History")]
+                  )
+                ])
+              : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(2)
       ]),
       _vm._v(" "),
       _c(
@@ -52615,27 +53912,27 @@ var render = function() {
                     }
                   },
                   [
-                    _c("option", { attrs: { value: "Checked In" } }, [
-                      _vm._v("Checked In")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Confirmed" } }, [
+                    _c("option", { attrs: { value: "CONFIRMED" } }, [
                       _vm._v("Confirmed")
                     ]),
                     _vm._v(" "),
-                    _c("option", { attrs: { value: "Wait List" } }, [
+                    _c("option", { attrs: { value: "CHECKED IN" } }, [
+                      _vm._v("Checked In")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "WAIT LIST" } }, [
                       _vm._v("Wait List")
                     ]),
                     _vm._v(" "),
-                    _c("option", { attrs: { value: "Checked Out" } }, [
+                    _c("option", { attrs: { value: "CHECKED OUT" } }, [
                       _vm._v("Checked out")
                     ]),
                     _vm._v(" "),
-                    _c("option", { attrs: { value: "No show" } }, [
+                    _c("option", { attrs: { value: "NO SHOW" } }, [
                       _vm._v("No show")
                     ]),
                     _vm._v(" "),
-                    _c("option", { attrs: { value: "Cancelled" } }, [
+                    _c("option", { attrs: { value: "CANCELLED" } }, [
                       _vm._v("Cancelled")
                     ])
                   ]
@@ -52812,6 +54109,342 @@ var render = function() {
           })
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "modal",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.showBIModal,
+              expression: "showBIModal"
+            }
+          ],
+          attrs: { title: "Billing Instruction" },
+          on: {
+            close: function($event) {
+              _vm.showBIModal = false
+            }
+          }
+        },
+        [
+          _c("form", { staticClass: "form-horizontal" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "" } }, [_vm._v("Guest Name")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "" } }, [
+                _vm._v("Company Percentage")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "number" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "pull-right" }, [
+              _c(
+                "button",
+                { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                [_vm._v("Save")]
+              )
+            ])
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "modal",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.showRCModal,
+              expression: "showRCModal"
+            }
+          ],
+          attrs: { title: "Recurring Charges" },
+          on: {
+            close: function($event) {
+              _vm.showRCModal = false
+            }
+          }
+        },
+        [
+          _c("form", { staticClass: "form-horizontal" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "" } }, [_vm._v("Guest Name")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "recCharSelId" } }, [
+                _vm._v("Recurring Charge")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  staticClass: "form-control",
+                  attrs: { name: "", id: "recCharSelId" }
+                },
+                [_c("option", { attrs: { value: "" } }, [_vm._v("--Select--")])]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "pull-right" }, [
+              _c(
+                "button",
+                { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                [_vm._v("Save")]
+              )
+            ])
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "modal",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.showPrModal,
+              expression: "showPrModal"
+            }
+          ],
+          attrs: { title: "Promo" },
+          on: {
+            close: function($event) {
+              _vm.showPrModal = false
+            }
+          }
+        },
+        [
+          _c("form", { staticClass: "form-horizontal" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "" } }, [_vm._v("Guest Name")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "" } }, [_vm._v("Promo")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  staticClass: "form-control",
+                  attrs: { name: "", id: "promoSelId" }
+                },
+                [_c("option", { attrs: { value: "" } }, [_vm._v("--Select--")])]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "pull-right" }, [
+              _c(
+                "button",
+                { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                [_vm._v("Save")]
+              )
+            ])
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "modal",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.showIncModal,
+              expression: "showIncModal"
+            }
+          ],
+          attrs: { title: "Inclusions" },
+          on: {
+            close: function($event) {
+              _vm.showIncModal = false
+            }
+          }
+        },
+        [
+          _c("form", { staticClass: "form-horizontal" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "" } }, [_vm._v("Guest Name")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "inclusionsSelId" } }, [
+                _vm._v("Inclusions")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  staticClass: "form-control",
+                  attrs: { name: "", id: "inclusionsSelId" }
+                },
+                [_c("option", { attrs: { value: "" } }, [_vm._v("--Select--")])]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "pull-right" }, [
+              _c(
+                "button",
+                { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                [_vm._v("Save")]
+              )
+            ])
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "modal",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.showExtPerModal,
+              expression: "showExtPerModal"
+            }
+          ],
+          attrs: { title: "Extra Person" },
+          on: {
+            close: function($event) {
+              _vm.showExtPerModal = false
+            }
+          }
+        },
+        [
+          _c("form", { staticClass: "form-horizontal" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "" } }, [_vm._v("Guest Name")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "" } }, [_vm._v("Name")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "" } }, [_vm._v("Amount")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "number" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "pull-right" }, [
+              _c(
+                "button",
+                { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                [_vm._v("Save")]
+              )
+            ])
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "modal",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.showRouTransModal,
+              expression: "showRouTransModal"
+            }
+          ],
+          attrs: { title: "Routed Transaction" },
+          on: {
+            close: function($event) {
+              _vm.showRouTransModal = false
+            }
+          }
+        },
+        [
+          _c("form", { staticClass: "form-horizontal" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "" } }, [_vm._v("From")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "" } }, [_vm._v("To")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "rouTransRecCharId" } }, [
+                _vm._v("Recurring Charge")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  staticClass: "form-control",
+                  attrs: { name: "", id: "rouTransRecCharId" }
+                },
+                [_c("option", { attrs: { value: "" } }, [_vm._v("--Select--")])]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "pull-right" }, [
+              _c(
+                "button",
+                { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                [_vm._v("Save")]
+              )
+            ])
+          ])
+        ]
       )
     ],
     1
@@ -52827,14 +54460,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("ID")]),
         _vm._v(" "),
         _c("th", [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Adult | Child")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Company")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Travel Agent")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Payment Mode")]),
         _vm._v(" "),
         _c("th", [_vm._v("Status")]),
         _vm._v(" "),
@@ -52862,6 +54487,18 @@ var staticRenderFns = [
       },
       [_c("span", { staticClass: "sr-only" }, [_vm._v("Toggle Dropdown")])]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-4 col-sm-4 mb-2" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _vm._v("\n            Current Bill Amount and Charges\n          ")
+        ])
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -52900,7 +54537,7 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "name" } }, [_vm._v("Reservation")]),
+        _c("label", { attrs: { for: "name" } }, [_vm._v("Reservation ID")]),
         _vm._v(" "),
         _c("input", {
           directives: [
@@ -52934,102 +54571,38 @@ var render = function() {
           : _vm._e()
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form-group" },
-        [
-          _c("label", { attrs: { for: "room_id" } }, [_vm._v("Room No.")]),
-          _vm._v(" "),
-          _c("multiselect", {
-            attrs: {
-              options: _vm.rooms,
-              "allow-empty": false,
-              label: "no",
-              "track-by": "id"
-            },
-            on: { select: _vm.onSelectRoom },
-            model: {
-              value: _vm.room,
-              callback: function($$v) {
-                _vm.room = $$v
-              },
-              expression: "room"
-            }
-          }),
-          _vm._v(" "),
-          _vm.form.errors.any("room_id")
-            ? _c("span", {
-                staticClass: "text-danger",
-                domProps: {
-                  textContent: _vm._s(_vm.form.errors.get("room_id"))
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "room_id" } }, [_vm._v("Room No.")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col-lg-12" },
+            _vm._l(_vm.rooms, function(item, key) {
+              return _c("button", {
+                key: key,
+                staticClass: "btn mr-2",
+                class: _vm.makePrimary(key),
+                attrs: { type: "button" },
+                domProps: { textContent: _vm._s(item.no) },
+                on: {
+                  click: function($event) {
+                    return _vm.setClassBtnRoom(item, key)
+                  }
                 }
               })
-            : _vm._e()
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form-group" },
-        [
-          _c("label", { attrs: { for: "arrival_date" } }, [
-            _vm._v("Arrival Date")
-          ]),
-          _vm._v(" "),
-          _c("vue-ctk-date-time-picker", {
-            attrs: { format: "YYYY-MM-DD HH:mm:ss" },
-            model: {
-              value: _vm.form.arrival_date,
-              callback: function($$v) {
-                _vm.$set(_vm.form, "arrival_date", $$v)
-              },
-              expression: "form.arrival_date"
-            }
-          }),
-          _vm._v(" "),
-          _vm.form.errors.any("arrival_date")
-            ? _c("span", {
-                staticClass: "text-danger",
-                domProps: {
-                  textContent: _vm._s(_vm.form.errors.get("arrival_date"))
-                }
-              })
-            : _vm._e()
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form-group" },
-        [
-          _c("label", { attrs: { for: "departure_date" } }, [
-            _vm._v("Departure Date")
-          ]),
-          _vm._v(" "),
-          _c("vue-ctk-date-time-picker", {
-            attrs: { format: "YYYY-MM-DD HH:mm:ss" },
-            model: {
-              value: _vm.form.departure_date,
-              callback: function($$v) {
-                _vm.$set(_vm.form, "departure_date", $$v)
-              },
-              expression: "form.departure_date"
-            }
-          }),
-          _vm._v(" "),
-          _vm.form.errors.any("departure_date")
-            ? _c("span", {
-                staticClass: "text-danger",
-                domProps: {
-                  textContent: _vm._s(_vm.form.errors.get("departure_date"))
-                }
-              })
-            : _vm._e()
-        ],
-        1
-      ),
+            }),
+            0
+          )
+        ]),
+        _vm._v(" "),
+        _vm.form.errors.any("room_id")
+          ? _c("span", {
+              staticClass: "text-danger",
+              domProps: { textContent: _vm._s(_vm.form.errors.get("room_id")) }
+            })
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
         _c("label", { attrs: { for: "amount" } }, [_vm._v("Amount")]),
@@ -53064,13 +54637,101 @@ var render = function() {
           : _vm._e()
       ]),
       _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "amount" } }, [_vm._v("Rate Type")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.rate_type,
+                expression: "form.rate_type"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { name: "", id: "" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.form,
+                  "rate_type",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "Corporate" } }, [
+              _vm._v("Corporate")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Rack" } }, [_vm._v("Rack")])
+          ]
+        ),
+        _vm._v(" "),
+        _vm.form.errors.any("amount")
+          ? _c("span", {
+              staticClass: "text-danger",
+              domProps: { textContent: _vm._s(_vm.form.errors.get("amount")) }
+            })
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "total_amount" } }, [
+          _vm._v("Total Amount")
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.total_amount,
+              expression: "form.total_amount"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", id: "total_amount" },
+          domProps: { value: _vm.form.total_amount },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "total_amount", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm.form.errors.any("total_amount")
+          ? _c("span", {
+              staticClass: "text-danger",
+              domProps: {
+                textContent: _vm._s(_vm.form.errors.get("total_amount"))
+              }
+            })
+          : _vm._e()
+      ]),
+      _vm._v(" "),
       _c(
         "button",
         {
           staticClass: "btn btn-primary",
           attrs: { type: "submit", disabled: _vm.isDisabled }
         },
-        [_vm._v("\n    Submit\n  ")]
+        [_vm._v("\n    Add room\n  ")]
       )
     ]
   )
@@ -54612,6 +56273,28 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
+        { staticClass: "col-md-4" },
+        [
+          _c(
+            "card",
+            [
+              _c("template", { slot: "header" }, [_vm._v("Add Here")]),
+              _vm._v(" "),
+              _c(
+                "template",
+                { slot: "body" },
+                [_c("travel-agent-form", { on: { dateIn: _vm.applied } })],
+                1
+              )
+            ],
+            2
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
         { staticClass: "col-md-8" },
         [
           _c(
@@ -54627,28 +56310,6 @@ var render = function() {
                     attrs: { travelAgents: _vm.localTravelAgents }
                   })
                 ],
-                1
-              )
-            ],
-            2
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-4" },
-        [
-          _c(
-            "card",
-            [
-              _c("template", { slot: "header" }, [_vm._v("Add Here")]),
-              _vm._v(" "),
-              _c(
-                "template",
-                { slot: "body" },
-                [_c("travel-agent-form", { on: { dateIn: _vm.applied } })],
                 1
               )
             ],
@@ -68345,7 +70006,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ReserveRoomForm_vue_vue_type_template_id_3da8f5bc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReserveRoomForm.vue?vue&type=template&id=3da8f5bc& */ "./resources/js/modules/reservation/ReserveRoomForm.vue?vue&type=template&id=3da8f5bc&");
 /* harmony import */ var _ReserveRoomForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReserveRoomForm.vue?vue&type=script&lang=js& */ "./resources/js/modules/reservation/ReserveRoomForm.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _ReserveRoomForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ReserveRoomForm.vue?vue&type=style&index=0&lang=css& */ "./resources/js/modules/reservation/ReserveRoomForm.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -68353,7 +70016,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _ReserveRoomForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _ReserveRoomForm_vue_vue_type_template_id_3da8f5bc___WEBPACK_IMPORTED_MODULE_0__["render"],
   _ReserveRoomForm_vue_vue_type_template_id_3da8f5bc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -68382,6 +70045,22 @@ component.options.__file = "resources/js/modules/reservation/ReserveRoomForm.vue
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReserveRoomForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ReserveRoomForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/reservation/ReserveRoomForm.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReserveRoomForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/modules/reservation/ReserveRoomForm.vue?vue&type=style&index=0&lang=css&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/modules/reservation/ReserveRoomForm.vue?vue&type=style&index=0&lang=css& ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReserveRoomForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ReserveRoomForm.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/reservation/ReserveRoomForm.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReserveRoomForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReserveRoomForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReserveRoomForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReserveRoomForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReserveRoomForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 

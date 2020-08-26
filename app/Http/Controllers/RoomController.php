@@ -35,7 +35,7 @@ class RoomController extends Controller
         request()->merge($additionalsData);
 
         $vData = $this->validate(request(), [
-            'no' => 'required|min:1|max:191|numeric',
+            'no' => 'required|numeric',
             'floor' => 'required|min:1|max:191|numeric',
             'type' => 'required|min:1|max:191',
             'status' => 'nullable|min:1|max:191',

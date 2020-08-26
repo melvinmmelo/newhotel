@@ -1,20 +1,20 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-md-8">
-        <card>
-          <template slot="header">Accounts</template>
-          <template slot="body">
-            <account-list :accounts="localAccounts"></account-list>
-          </template>
-        </card>
-      </div>
-
-      <div class="col-md-4">
+      <div class="col-lg-4 mb-2">
         <card>
           <template slot="header">Add Here</template>
           <template slot="body">
             <account-form v-on:dateIn="applied"></account-form>
+          </template>
+        </card>
+      </div>
+
+      <div class="col-lg-8">
+        <card>
+          <template slot="header">Guest List</template>
+          <template slot="body">
+            <account-list :accounts="localAccounts"></account-list>
           </template>
         </card>
       </div>

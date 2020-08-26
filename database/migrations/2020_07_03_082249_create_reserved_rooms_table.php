@@ -17,6 +17,7 @@ class CreateReservedRoomsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('reservation_id');
             $table->unsignedInteger('room_id');
+            $table->string('rate_type');
             $table->datetime('arrival_date')->nullable();
             $table->datetime('departure_date')->nullable();
             $table->float('amount');

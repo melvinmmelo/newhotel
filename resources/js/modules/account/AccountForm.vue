@@ -15,6 +15,9 @@
           <option value="">--Select--</option>
           <option value="Mr.">Mr.</option>
           <option value="Mrs.">Mrs.</option>
+          <option value="Mrs.">Dr.</option>
+          <option value="Mrs.">Engr.</option>
+          <option value="Mrs.">Atty.</option>
         </select>
 
         <span
@@ -31,7 +34,7 @@
           name="last_name"
           id="last_name"
           v-model="form.last_name"
-          @keyup="changeName"
+          :keyup="setAccountName()"
         />
         <span
           class="text-danger"
@@ -47,6 +50,7 @@
           name="first_name"
           id="first_name"
           v-model="form.first_name"
+          :keydown="setAccountName()"
         />
         <span
           class="text-danger"
@@ -62,6 +66,7 @@
           name="middle_name"
           id="middle_name"
           v-model="form.middle_name"
+          :keydown="setAccountName()"
         />
         <span
           class="text-danger"
@@ -70,13 +75,14 @@
         ></span>
       </div>
       <div class="form-group">
-        <label for="account_name">Account Name</label>
+        <label for="account_name">Guest Name</label>
         <input
           type="text"
           class="form-control"
           name="account_name"
           id="account_name"
           v-model="form.account_name"
+          readonly
         />
         <span
           class="text-danger"
@@ -378,23 +384,9 @@ export default {
           alert(errors.message);
         });
     },
-    changeName() {
-      this.form.last_name = this.form.last_name;
+    setAccountName() {
+      this.form.account_name = this.form.last_name + " " + this.form.first_name + " " + this.form.middle_name;
     }
   },
-  computed: {
-    account_name: {
-      get() {
-        return (
-          this.account.last_name +
-          " " +
-          this.account.first_name +
-          " " +
-          this.account.middle_name
-        );
-      },
-      set() {}
-    }
-  }
 };
 </script>

@@ -23,12 +23,17 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                @auth
+                    <a href="{{ route('reservation-add') }}"><button type="button" class="btn btn-sm btn-danger">{{ __('Create Reservation') }}</button><a/>
+                @endauth
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
@@ -49,38 +54,35 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('reservations') }}">{{ __('Reservations') }}</a>
-                            </li>
 
-                            <li class="nav-item">
-                            <a class="nav-link" href="{{ route('accounts') }}">{{ __('Accounts') }}</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('rooms') }}">{{ __('Rooms') }}</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('companies') }}">{{ __('Companies') }}</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('travel-agents') }}">{{ __('Travel Agents') }}</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Front Desk
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">{{ __('Open') }}</a>
+                                    <a class="dropdown-item" href="#">{{ __('Close') }}</a>
+                                </div>
                             </li>
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Others
+                                  Master Records
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('transactions') }}">{{ __('Transactions') }}</a>
-                                <a class="dropdown-item" href="{{ route('promos') }}">{{ __('Promos') }}</a>
-                                  <a class="dropdown-item" href="{{ route('services') }}">{{ __('Services') }}</a>
-                                  {{-- <div class="dropdown-divider"></div>
-                                  <a class="dropdown-item" href="#">Something else here</a> --}}
+                                    <a class="dropdown-item" href="{{ route('reservations') }}">{{ __('Reservations') }}</a>
+                                    <a class="dropdown-item" href="{{ route('accounts') }}">{{ __('Guests') }}</a>
+                                    <a class="dropdown-item" href="{{ route('rooms') }}">{{ __('Rooms') }}</a>
+                                    <a class="dropdown-item" href="{{ route('companies') }}">{{ __('Companies') }}</a>
+                                    <a class="dropdown-item" href="{{ route('travel-agents') }}">{{ __('Travel Agents') }}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('transactions') }}">{{ __('Transactions') }}</a>
+                                    <a class="dropdown-item" href="{{ route('promos') }}">{{ __('Charges') }}</a>
+                                    <a class="dropdown-item" href="{{ route('promos') }}">{{ __('Rack Rates') }}</a>
+                                    <a class="dropdown-item" href="{{ route('promos') }}">{{ __('Promos') }}</a>
+                                    <a class="dropdown-item" href="{{ route('services') }}">{{ __('Services') }}</a>
                                 </div>
-                              </li>
+                            </li>
 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

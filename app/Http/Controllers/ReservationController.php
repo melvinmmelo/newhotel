@@ -42,6 +42,14 @@ class ReservationController extends Controller
             'purpose' => 'required|min:1|max:191',
             'remarks' => 'max:191',
             'user_id' => 'required',
+            'arrival_date' => 'required|date',
+            'departure_date' => 'required|date',
+            'cc_no' => 'nullable',
+            'cc_exp_date' => 'nullable',
+            'ccv' => 'nullable',
+            'cheque_bank' => 'nullable',
+            'cheque_no' => 'nullable',
+            'cheque_amount' => 'nullable',
         ]);
 
         $reservation = Reservation::create($vData);

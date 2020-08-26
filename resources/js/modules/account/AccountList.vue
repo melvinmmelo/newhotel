@@ -3,7 +3,7 @@
     <table class="table table-stripped">
       <thead>
         <tr>
-          <th>Account Name</th>
+          <th>Guest Name</th>
           <th>Title</th>
           <th>Last Name</th>
           <th>First Name</th>
@@ -46,7 +46,6 @@ export default {
   },
   created() {
     this.localAccounts = this.accounts;
-    console.log(this.accounts);
   }
 };
 </script>
