@@ -15,6 +15,7 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('code')->unique();
             $table->enum("accounting_side", ["DEBIT", "CREDIT"])->default("DEBIT");
             $table->string("memo");
             $table->integer("local_tax")->default(0);
@@ -26,8 +27,11 @@ class CreateTransactionsTable extends Migration
             $table->tinyInteger("govt_tax_inclusive");
             $table->integer("service_charge");
             $table->tinyInteger("service_charge_inclusive");
-            $table->unsignedInteger("user_id");
             $table->timestamps();
+
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

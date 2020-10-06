@@ -14,7 +14,7 @@ class RoomController extends Controller
         $this->middleware('auth');
     }
     public function list(){
-        $rooms = Room::all();
+        $rooms = Room::where('user_id', Auth::user()->id)->get();
         return view('room', compact('rooms'));
     }
 
@@ -42,7 +42,6 @@ class RoomController extends Controller
             'user_id' => 'required|min:1|max:191',
             'image' => 'nullable|min:1|max:191',
             'capacity' => 'required|numeric',
-            'default_amount' => 'required|numeric',
             'user_id' => 'required|numeric|exists:users,id'
         ]);
 

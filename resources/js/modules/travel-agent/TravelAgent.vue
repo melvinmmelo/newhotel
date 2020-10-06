@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4 mb-2">
         <card>
           <template slot="header">Add Here</template>
           <template slot="body">

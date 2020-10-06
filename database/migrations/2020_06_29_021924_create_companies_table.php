@@ -18,6 +18,11 @@ class CreateCompaniesTable extends Migration
             $table->string('name')->unique();
             $table->text('address');
             $table->timestamps();
+
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')->references('id')->on('users');
+
         });
     }
 

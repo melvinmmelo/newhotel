@@ -5,18 +5,6 @@
       v-on:keyup="form.errors.clear($event.target.name)"
     >
       <div class="form-group">
-        <label for="account_id">Account</label>
-        <multiselect
-          v-model="reservation"
-          :options="compRes"
-          :allow-empty="false"
-          label="name"
-          track-by="id"
-          :custom-label="reservationName"
-          @select="onSelectReservation"
-        ></multiselect>
-      </div>
-      <div class="form-group">
         <label for="status">Transaction</label>
         <multiselect
           v-model="transaction"
@@ -26,6 +14,23 @@
           track-by="id"
           @select="onSelectTransaction"
         ></multiselect>
+
+        <span
+          class="text-danger"
+          v-if="form.errors.any('transaction_id')"
+          v-text="form.errors.get('transaction_id')"
+        ></span>
+      </div>
+
+      <div class="form-group">
+        <label for="status">Amount</label>
+        <input type="text" class="form-control" v-model="form.amount">
+
+        <span
+          class="text-danger"
+          v-if="form.errors.any('amount')"
+          v-text="form.errors.get('amount')"
+        ></span>
       </div>
 
       <button type="submit" class="btn btn-primary">Save changes</button>
@@ -34,29 +39,29 @@
 </template>
 
 <script>
-import Form from "../../core/Form";
+import Form from "../../core/Form.js";
 import Multiselect from "vue-multiselect";
 
 export default {
-  props: ["reservations"],
+  props: ["reservation"],
   components: {
     Multiselect
   },
   data() {
     return {
-      formAddTransaction: new Form({
+      form: new Form({
         reservation_id: "",
-        transaction_id: ""
+        transaction_id: "",
+        amount: ""
       }),
+      localReservation: "",
       transaction: "",
       transactions: [],
-      reservation: "",
-      localReservations: ""
     };
   },
   methods: {
     handleSubmitAddTransaction() {
-      this.formAddTransaction
+      this.form
         .submit("post", "/guest/transaction/create")
         .then(response => {
           alert("Guest Transaction has been created!");
@@ -76,24 +81,19 @@ export default {
           console.log(errors);
         });
     },
-    onSelectReservation(selectedItem) {
-      if (this.transactions.count == undefined) {
-        this.fetchTransactions();
-      }
-
-      this.formAddTransaction.reservation_id = selectedItem.id;
-    },
     onSelectTransaction(selectedItem) {
-      this.formAddTransaction.transaction_id = selectedItem.id;
-    },
-    reservationName({ id, account }) {
-      return `${account.last_name}, ${account.first_name} - ${id}`;
+      this.form.transaction_id = selectedItem.id;
+      this.form.reservation_id = this.reservation.id;
     }
   },
+  created(){
+    this.localReservation = this.reservation;
+    this.fetchTransactions();
+  },
   computed: {
-    compRes() {
-      return (this.localReservations = this.reservations);
-    }
+    // compRes() {
+    //   return (this.localReservations = this.reservations);
+    // }
   }
 };
 </script>

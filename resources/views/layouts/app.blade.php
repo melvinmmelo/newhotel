@@ -18,13 +18,32 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        body,html {
+            background-color: lightgrey;
+        }
+
+        /* .bgimg-1, .bgimg-2, .bgimg-3 {
+        position: relative;
+        background-position: center;
+        background-repeat: repeat;
+        background-size: cover;
+
+        }
+        .bgimg-1 {
+        background-color: gray;
+        height: 100%;
+        } */
+
+    </style>
+
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name') }}
                 </a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -44,16 +63,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
+                        @auth
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -72,15 +82,23 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('reservations') }}">{{ __('Reservations') }}</a>
                                     <a class="dropdown-item" href="{{ route('accounts') }}">{{ __('Guests') }}</a>
-                                    <a class="dropdown-item" href="{{ route('rooms') }}">{{ __('Rooms') }}</a>
                                     <a class="dropdown-item" href="{{ route('companies') }}">{{ __('Companies') }}</a>
                                     <a class="dropdown-item" href="{{ route('travel-agents') }}">{{ __('Travel Agents') }}</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('transactions') }}">{{ __('Transactions') }}</a>
-                                    <a class="dropdown-item" href="{{ route('promos') }}">{{ __('Charges') }}</a>
-                                    <a class="dropdown-item" href="{{ route('promos') }}">{{ __('Rack Rates') }}</a>
-                                    <a class="dropdown-item" href="{{ route('promos') }}">{{ __('Promos') }}</a>
                                     <a class="dropdown-item" href="{{ route('services') }}">{{ __('Services') }}</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Configuration
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('rooms') }}">{{ __('Rooms') }}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('transactions') }}">{{ __('Transactions') }}</a>
+                                    <a class="dropdown-item" href="{{ route('promos') }}">{{ __('Rates') }}</a>
+                                    <a class="dropdown-item" href="{{ route('promos') }}">{{ __('Reset') }}</a>
                                 </div>
                             </li>
 
@@ -102,13 +120,13 @@
                                 </div>
                             </li>
 
-                        @endguest
+                        @endauth
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4" class="caption2">
             @yield('content')
         </main>
     </div>

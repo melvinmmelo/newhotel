@@ -11,7 +11,7 @@
     </nav>
     {{-- <account-component :items="{{ json_encode($accounts) }}"></account-component> --}}
     <div class="row">
-        <div class="col">
+        <div class="col mb-2">
             <card>
                 <template slot="header">Add Here</template>
                 <template slot="body">
@@ -27,8 +27,9 @@
                 <account-list :accounts="{{ json_encode($accounts->items()) }}"></account-list>
                 </template>
             </card>
-
-            {{ $accounts}}
+            <div class="mt-2">
+                {{ $accounts }}
+            </div>
 
         </div>
 

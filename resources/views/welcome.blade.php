@@ -11,60 +11,81 @@
 
         <!-- Styles -->
         <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
+            body,
+            body, html {
+            height: 100%;
+            margin: 0;
+            font: 400 15px/1.8 "Lato", sans-serif;
+            color: #777;
             }
 
-            .full-height {
-                height: 100vh;
+            .bgimg-1, .bgimg-2, .bgimg-3 {
+            position: relative;
+            opacity: 0.65;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+
+            }
+            .bgimg-1 {
+            background-image: url("h1.jpg");
+            height: 100%;
             }
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
+            .caption {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            text-align: center;
+            color: #000;
             }
 
-            .position-ref {
-                position: relative;
+            .caption span.border {
+            background-color: #111;
+            color: #fff;
+            padding: 18px;
+            font-size: 25px;
+            letter-spacing: 10px;
             }
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
+            h3 {
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font: 20px "Lato", sans-serif;
+            color: #111;
             }
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+
+        <div class="bgimg-1">
+            <div class="caption">
+              <span class="border">UNIVERSITY OF BATANGAS </span><br>
+              <span class="border">Property Mangement System v1<br></span>
+              @if (Route::has('login'))
+              <h2 class="top-right links">
+                  @auth
+                      <a href="{{ url('/home') }}">Home</a>
+                  @else
+                      <a href="{{ route('login') }}">Login</a>
+                        |
+                      @if (Route::has('register'))
+                          <a href="{{ route('register') }}">Register</a>
+                      @endif
+                  @endauth
+              </h2>
+          @endif
+
+            </div>
+          </div>
+
+          <p style="padding:5px 15px">Developed by UB-ITC Department <small>&#xa9;</small> 2020</p>
+
+
+
+
+        {{-- <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
@@ -95,6 +116,6 @@
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </body>
 </html>

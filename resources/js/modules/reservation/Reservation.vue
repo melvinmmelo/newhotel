@@ -21,28 +21,16 @@
         </card>
       </div>
     </div>
-    <div class="row mb-2 justify-content-center">
-      <!-- <div class="asf">Test</div> -->
-      <div class="col-lg-6 col-sm-12">
-        <card>
-          <template slot="header">Add Room</template>
-          <template slot="body">
-            <reserve-room-form
-              :reservationId="reservationId"
-            ></reserve-room-form>
-          </template>
-        </card>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import ReservationForm from "./ReservationForm.vue";
-import ReserveRoomForm from "./ReserveRoomForm.vue";
+// import ReserveRoomForm from "./ReserveRoomForm.vue";
+import ReserveRoomType from "./ReserveRoomType.vue";
 
 export default {
-  components: { ReservationForm, ReserveRoomForm },
+  components: { ReservationForm, ReserveRoomType },
   data() {
     return {
       localReservations: "",

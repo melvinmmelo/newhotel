@@ -2,7 +2,7 @@ require("./bootstrap");
 require("vue-multiselect/dist/vue-multiselect.min.css");
 
 window.Vue = require("vue");
-
+window.Vue.use(require("vue-moment"));
 var Turbolinks = require("turbolinks");
 import TurbolinksAdapter from "vue-turbolinks";
 
@@ -60,6 +60,11 @@ Vue.component("promo-component", require("./modules/promo/Promo.vue").default);
 Vue.component(
   "service-component",
   require("./modules/service/Service.vue").default
+);
+
+Vue.component(
+  "reservation-confirmation-form",
+  require("./modules/reservation/ReservationConfirmationForm.vue").default
 );
 
 document.addEventListener("turbolinks:load", () => {

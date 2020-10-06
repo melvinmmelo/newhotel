@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -62,4 +62,7 @@ Route::post('/guest/transaction/create', 'GuestTransactionController@save');
 // guest transaction
 Route::post('/guest/service/create', 'GuestServiceController@save');
 
+// print confirmation
+Route::get('/print/confirmation/{reservation}', 'ReservationController@print')->name('print');
 
+Route::put('/guest-transaction/update', 'GuestTransactionController@update');

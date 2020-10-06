@@ -19,18 +19,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('reservations', 'SelectAPIController@reservations');
-    Route::get('accounts', 'SelectAPIController@accounts');
-    Route::get('companies', 'SelectAPIController@companies');
-    Route::get('travel-agents', 'SelectAPIController@travelAgents');
-    Route::get('rooms', 'SelectAPIController@rooms');
 
-    Route::get('reserved-rooms/{id}', 'SelectAPIController@getReservedRooms');
+    Route::get('reservation/{id}', 'UserSelectAPIController@reservation');
+    Route::get('reservations', 'UserSelectAPIController@reservations');
+    Route::get('/checked-in/reservations', 'UserSelectAPIController@checkedInReservations');
+    Route::get('accounts', 'UserSelectAPIController@accounts');
+    Route::get('companies', 'UserSelectAPIController@companies');
+    Route::get('travel-agents', 'UserSelectAPIController@travelAgents');
+    Route::get('rooms', 'UserSelectAPIController@rooms');
 
-    Route::get('transactions', 'SelectAPIController@transactions');
+    Route::get('rooms-per-type/{type}', 'UserSelectAPIController@roomsPerType');
 
-    Route::get('promos', 'SelectAPIController@promos');
-    Route::get('services', 'SelectAPIController@services');
+    Route::get('transactions', 'UserSelectAPIController@transactions');
+    Route::get('services', 'UserSelectAPIController@services');
+
+    Route::get('reservation-price/{cat}/{type}', 'UserSelectAPIController@roomPriceBasedOnCatRate');
+
 });
 
 

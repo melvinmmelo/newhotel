@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
@@ -13,7 +14,7 @@ class CompanyController extends Controller
         $this->middleware('auth');
     }
     public function list(){
-        $companies = Company::all();
+        $companies = Company::where('user_id', Auth::user()->id)->get();
         return view('company', compact('companies'));
     }
 

@@ -3,6 +3,7 @@
     <table class="table table-stripped">
       <thead>
         <tr>
+          <th>Code</th>
           <th>Accounting</th>
           <th>Memo</th>
           <th>Local Tax</th>
@@ -14,6 +15,7 @@
       </thead>
       <tbody>
         <tr v-for="(item, key) in transactions" :key="key">
+          <td>{{ item.code }}</td>
           <td>{{ item.accounting_side }}</td>
           <td>{{ item.memo }}</td>
           <td>{{ item.local_tax }}</td>

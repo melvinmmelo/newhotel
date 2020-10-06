@@ -8,6 +8,7 @@ use App\Promo;
 use App\Reservation;
 use App\ReservedRoom;
 use App\Room;
+use App\RoomType;
 use App\Service;
 use App\Transaction;
 use App\TravelAgent;
@@ -60,5 +61,19 @@ class SelectAPIController extends Controller
     public function services(){
         $services = Service::all();
         return response()->json($services, 201);
+    }
+
+    public function roomsPerType($type){
+        $rooms = Room::where('type', $type)
+                        ->where('availability', TRUE)
+                        ->get();
+        return response()->json($rooms, 201);
+    }
+
+    public function roomPriceBasedOnCatRate($cat, $type){
+        $price = RoomType::where('room_type', $cat)
+                        ->where('rate_type', $type)
+                        ->first();
+        return response()->json($price, 201);
     }
 }

@@ -17,14 +17,17 @@ class CreateRoomsTable extends Migration
             $table->bigIncrements('id');
             $table->integer("no");
             $table->integer("floor");
-            $table->string("type")->default("single");
+            $table->string("type")->default("STANDARD");
             $table->string("status")->default("clean");
             $table->string("image")->nullable();
             $table->integer("capacity")->default(1);
-            $table->boolean("availabity")->default(FALSE);
-            $table->float('default_amount', 8, 2);
-            $table->unsignedBigInteger("user_id");
+            $table->boolean("availability")->default(TRUE);
+            $table->float('default_amount', 8, 2)->default(0);
             $table->timestamps();
+
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

@@ -15,6 +15,7 @@ class CreateReservationsTable extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('confirmation_id');
             $table->unsignedInteger('account_id');
             $table->unsignedInteger('company_id')->nullable();
             $table->unsignedInteger('travel_agent_id')->nullable();
@@ -22,23 +23,33 @@ class CreateReservationsTable extends Migration
             $table->datetime('departure_date');
             $table->datetime('actual_arrival_date')->nullable();
             $table->datetime('actual_departure_date')->nullable();
+            $table->integer('nights')->nullable();
             $table->integer('adult_no')->nullable();
             $table->integer('child_no')->nullable();
             $table->string('payment_mode');
+            $table->string('order_number')->nullable();
+            $table->string('billing_instruction');
+            $table->string('cc_type')->nullable();
             $table->string('cc_no')->nullable();
-            $table->string('cc_exp_date')->nullable();
-            $table->string('ccv')->nullable();
-            $table->string('cheque_bank')->nullable();
-            $table->string('cheque_no')->nullable();
-            $table->string('cheque_amount')->nullable();
+            $table->string('amount')->nullable();
             $table->string('purpose');
+            $table->string('request')->nullable();
             $table->string('remarks')->nullable();
             $table->string('status')->default('TENTATIVE');
-            $table->unsignedInteger('user_id');
+            $table->string('guarantee_type');
+            $table->string('room_category_code');
+            $table->string('rack_rate_code');
+            $table->unsignedInteger('room_no')->nullable();
             $table->datetime('confirmed_at')->nullable();
+            $table->datetime('checked_in_at')->nullable();
             $table->datetime('cancelled_at')->nullable();
             $table->datetime('checkedout_at')->nullable();
+            $table->float('total_amount', 8,2)->default(0);
             $table->timestamps();
+
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

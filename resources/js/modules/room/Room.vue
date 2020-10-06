@@ -1,20 +1,21 @@
 <template>
   <div>
     <div class="row">
+      <div class="col-md-4 mb-2">
+        <card>
+          <template slot="header">Add Here</template>
+          <template slot="body">
+            <room-form v-on:dateIn="applied"></room-form>
+          </template>
+        </card>
+
+      </div>
+
       <div class="col-md-8">
         <card>
           <template slot="header">Rooms</template>
           <template slot="body">
             <room-list :rooms="localRooms"></room-list>
-          </template>
-        </card>
-      </div>
-
-      <div class="col-md-4">
-        <card>
-          <template slot="header">Add Here</template>
-          <template slot="body">
-            <room-form v-on:dateIn="applied"></room-form>
           </template>
         </card>
       </div>

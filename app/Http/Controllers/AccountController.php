@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Account;
+use App\CreditCard;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -22,6 +23,9 @@ class AccountController extends Controller
 
     public function save(Request $request)
     {
+        $cardType = CreditCard::getType( substr($request->input('credit_card_no'), 0, 1) );
+        $addDetails = array("credit_card_type" => $cardType);
+        request()->merge($addDetails);
 
         $vData = $request->validate([
             'title' => 'required|min:1|max:191',

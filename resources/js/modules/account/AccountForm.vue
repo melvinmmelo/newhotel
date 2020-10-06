@@ -291,21 +291,6 @@
         ></span>
       </div>
       <div class="form-group">
-        <label for="credit_card_type">Credit Card Type</label>
-        <input
-          type="text"
-          class="form-control"
-          name="credit_card_type"
-          id="credit_card_type"
-          v-model="form.credit_card_type"
-        />
-        <span
-          class="text-danger"
-          v-if="form.errors.any('credit_card_type')"
-          v-text="form.errors.get('credit_card_type')"
-        ></span>
-      </div>
-      <div class="form-group">
         <label for="credit_card_no">Credit Card No</label>
         <input
           type="text"
@@ -368,7 +353,6 @@ export default {
         country: "",
         zip: "",
         email: "",
-        credit_card_type: "",
         credit_card_no: "",
         credit_card_exp_date: ""
       })

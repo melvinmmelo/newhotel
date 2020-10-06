@@ -16,18 +16,19 @@ class TransactionController extends Controller
 
     public function list()
     {
-        $transactions = Transaction::all();
+        $transactions = Transaction::where('user_id', Auth::user()->id)->get();
         return view('transaction', compact('transactions'));
     }
 
     public function save()
     {
-
-        $addDetails = array("user_id" => Auth::user()->id);
+        $transCode = Transaction::generateCode();
+        $addDetails = array("code" => $transCode);
         request()->merge($addDetails);
 
         $vData = $this->validate(request(), [
             'accounting_side' => 'required|min:2|max:191',
+            'code' => 'required|numeric',
             'memo' => 'required|min:1|max:191|unique:transactions',
             'local_tax' => 'required|numeric',
             'local_tax_inclusive' => 'required|boolean',
@@ -37,10 +38,9 @@ class TransactionController extends Controller
             'service_charge_inclusive' => 'required|boolean',
             'warning_amount' => 'required|numeric',
             'default_amount' => 'required|numeric',
-            'user_id' => 'required|numeric'
         ]);
 
-        $transaction = Transaction::create($vData);
+        $transaction = Auth::user()->transactions()->create($vData);
 
         return response()->json($transaction, 200);
     }

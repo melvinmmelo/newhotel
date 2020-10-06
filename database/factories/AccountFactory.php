@@ -29,5 +29,6 @@ $factory->define(Account::class, function (Faker $faker) {
         'credit_card_type' => $faker->creditCardType,
         'credit_card_no' => $faker->creditCardNumber(),
         'credit_card_exp_date' => $faker->creditCardExpirationDate,
+        'user_id' => 1,
     ];
 });

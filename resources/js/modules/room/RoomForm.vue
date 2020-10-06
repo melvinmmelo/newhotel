@@ -44,10 +44,9 @@
         <label for="type">Type</label>
         <select name="type" id="type" v-model="form.type" class="form-control">
           <option value="">--Select--</option>
-          <option value="Standard">Standard</option>
-          <option value="Middle Class">Middle Class</option>
-          <option value="High Class">High Class</option>
-          <option value="Premium">Premium</option>
+          <option value="STANDARD">STANDARD</option>
+          <option value="PREMIUM">PREMIUM</option>
+          <option value="SUITE">SUITE</option>
         </select>
         <span
           class="text-danger"
@@ -70,22 +69,6 @@
           v-text="form.errors.get('capacity')"
         ></span>
       </div>
-      <div class="form-group">
-        <label for="default_amount">Default Amount</label>
-        <input
-          type="text"
-          name="default_amount"
-          id="default_amount"
-          class="form-control"
-          v-model="form.default_amount"
-        />
-        <span
-          class="text-danger"
-          v-if="form.errors.any('default_amount')"
-          v-text="form.errors.get('default_amount')"
-        ></span>
-      </div>
-
       <button type="submit" class="btn btn-primary">
         Submit
       </button>
@@ -112,6 +95,14 @@ export default {
       this.form
         .submit("post", "/room/create")
         .then(response => this.$emit("dateIn", response))
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    getRoomsBasedOnType() {
+      this.form
+        .submit("post", "/room/create")
+        .then(response => console.log(response))
         .catch(error => {
           console.log(error);
         });

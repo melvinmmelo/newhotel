@@ -17,6 +17,10 @@ class CreateServicesTable extends Migration
             $table->bigIncrements('id');
             $table->string('description')->unique();
             $table->timestamps();
+
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
