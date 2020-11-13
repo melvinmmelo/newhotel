@@ -61,8 +61,8 @@ export default {
       this.form
         .submit("post", "/company/create")
         .then(response => {
-          this.form.reset();
           this.$emit("dateIn", response);
+          console.log(response)
         })
         .catch(error => console.log(error.message));
     }

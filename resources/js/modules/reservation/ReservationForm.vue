@@ -208,7 +208,7 @@
         >
           <option value="">--Select--</option>
           <option value="Cash">Cash</option>
-          <option value="Cash">Debit Card</option>
+          <option value="Debit">Debit Card</option>
           <option value="Credit Card">Credit Card</option>
           <option value="Cheque">Cheque</option>
         </select>

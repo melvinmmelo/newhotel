@@ -8,7 +8,6 @@
           <th>Type</th>
           <th>Status</th>
           <th>Capacity</th>
-          <th>Amount</th>
           <th>Created At</th>
         </tr>
       </thead>
@@ -19,7 +18,6 @@
           <td>{{ item.type }}</td>
           <td>{{ item.status }}</td>
           <td>{{ item.capacity }}</td>
-          <td>{{ item.default_amount }}</td>
           <td>{{ item.created_at }}</td>
         </tr>
       </tbody>
@@ -32,8 +30,15 @@ export default {
   props: ["rooms"],
   data() {
     return {
-      localRooms: ""
+      localRooms: "",
+      room: {}
     };
+  },
+  methods: {
+    setToUpdate(room) {
+      this.room = room;
+      alert(this.room);
+    }
   },
   created() {
     this.localRooms = this.rooms;

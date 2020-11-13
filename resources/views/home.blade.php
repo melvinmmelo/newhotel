@@ -3,23 +3,23 @@
 @section('content')
 <div class="container">
 
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>Welcome!</strong> This is UB-CTHM Property Management System
+    {{-- <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Welcome!</strong> This is EXCELLENTIA.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
+      </div> --}}
 
     <div id="carouselExampleSlidesOnly" class="carousel slide mb-2" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img class="d-block w-100" src="/1.jpg" alt="First slide">
+            <img class="d-block w-100" src="{{ asset('images/img1.jpg') }}" alt="First slide">
           </div>
           <div class="carousel-item">
-            <img class="d-block w-100" src="/1.jpg" alt="Second slide">
+            <img class="d-block w-100" src="{{ asset('images/img2.jpg') }}" alt="Second slide">
           </div>
           <div class="carousel-item">
-            <img class="d-block w-100" src="/1.jpg" alt="Third slide">
+            <img class="d-block w-100" src="{{ asset('images/img3.jpg') }}" alt="Third slide">
           </div>
         </div>
       </div>

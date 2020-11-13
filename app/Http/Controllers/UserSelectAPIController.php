@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Account;
 use App\Company;
+use App\GuestTransaction;
 use App\Promo;
 use App\Reservation;
 use App\ReservedRoom;
@@ -37,6 +38,17 @@ class UserSelectAPIController extends Controller
         return response()->json($reservations, 201);
     }
 
+    public function payments(Reservation $reservation){
+        $res['payments'] = $reservation->payments();
+        $res['totalPayment'] = $reservation->totalPayment();
+        $res['totalTransaction'] = $reservation->totalTransactions();
+        $res['serviceCharge'] = $reservation->serviceCharge();
+        $res['vat'] = $reservation->vat();
+        $res['localTax'] = $reservation->localTax();
+        $res['totalCharges'] = $reservation->totalCharges();
+        return response()->json($res, 201);
+    }
+
     public function accounts(){
         $accounts = Account::where('user_id', Auth::user()->id)->get();
         return response()->json($accounts, 201);
@@ -57,8 +69,26 @@ class UserSelectAPIController extends Controller
         return response()->json($rooms, 201);
     }
 
-    public function transactions(){
-        $transactions = Transaction::where('user_id', Auth::user()->id)->get();
+    public function guestTransactions(Reservation $reservation, $type){
+        if ($type == 'credit') {
+            $transactions = GuestTransaction::where('reservation_id', $reservation->id)->whereHas('transaction', function ($query) {
+                $query->where('accounting_side', 'CREDIT');
+            })->get();
+
+        }else{
+            $transactions = GuestTransaction::where('reservation_id', $reservation->id)->whereHas('transaction', function ($query) {
+                $query->where('accounting_side', 'DEBIT');
+            })->get();
+        }
+        return response()->json($transactions, 201);
+    }
+
+    public function transactions($type){
+        if ($type == 'credit') {
+            $transactions = Transaction::credit()->where('user_id', Auth::user()->id)->get();
+        }else{
+            $transactions = Transaction::debit()->where('user_id', Auth::user()->id)->get();
+        }
         return response()->json($transactions, 201);
     }
 

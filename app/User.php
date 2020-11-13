@@ -47,6 +47,14 @@ class User extends Authenticatable
         return $this->hasMany(Reservation::class);
     }
 
+    public function companies(){
+        return $this->hasMany(Company::class);
+    }
+
+    public function travelAgent(){
+        return $this->hasMany(TravelAgent::class);
+    }
+
     public function rooms(){
         return $this->hasMany(Room::class);
     }

@@ -100,14 +100,14 @@ export default {
   methods: {
     getTransactions() {
       window.axios
-        .get("/api/reservation/" + this.prReservation.id)
+        .get("/api/reservation/" + this.prReservation.id + "/transactions/debit")
         .then(response => {
           //console.log(response.data.transactions.length);
-          if (response.data.transactions.length == 0) {
+          if (response.data.length == 0) {
             alert("No transaction found!");
             return;
           }
-          this.transactions = response.data.transactions;
+          this.transactions = response.data;
         })
         .catch(errors => {
           console.log(errors);

@@ -69,6 +69,25 @@
           v-text="form.errors.get('capacity')"
         ></span>
       </div>
+
+      <div class="form-group">
+        <label for="floor">Status</label>
+        <select
+          name="status"
+          id="status"
+          v-model="form.status"
+          class="form-control"
+        >
+          <option value="">--Select--</option>
+          <option value="CLEAN">Clean</option>
+          <option value="DIRTY">Dirty</option>
+        </select>
+        <span
+          class="text-danger"
+          v-if="form.errors.any('status')"
+          v-text="form.errors.get('status')"
+        ></span>
+      </div>
       <button type="submit" class="btn btn-primary">
         Submit
       </button>

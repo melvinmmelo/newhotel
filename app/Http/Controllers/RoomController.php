@@ -29,8 +29,7 @@ class RoomController extends Controller
         "errors" => ["no" => ["Room has already been saved."]]], 422);
         }
 
-        $additionalsData = array('user_id' => Auth::user()->id,
-                                 'image' => '/room.png',
+        $additionalsData = array('image' => '/room.png',
                                 'status' => 'clean');
         request()->merge($additionalsData);
 
@@ -39,13 +38,11 @@ class RoomController extends Controller
             'floor' => 'required|min:1|max:191|numeric',
             'type' => 'required|min:1|max:191',
             'status' => 'nullable|min:1|max:191',
-            'user_id' => 'required|min:1|max:191',
             'image' => 'nullable|min:1|max:191',
-            'capacity' => 'required|numeric',
-            'user_id' => 'required|numeric|exists:users,id'
+            'capacity' => 'required|numeric'
         ]);
 
-        $room = Room::create($vData);
+        $room =  Auth::user()->rooms()->create($vData);
 
         return response()->json($room, 200);
     }

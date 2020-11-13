@@ -18,7 +18,7 @@ class CreateRoomsTable extends Migration
             $table->integer("no");
             $table->integer("floor");
             $table->string("type")->default("STANDARD");
-            $table->string("status")->default("clean");
+            $table->string("status")->default("CLEAN");
             $table->string("image")->nullable();
             $table->integer("capacity")->default(1);
             $table->boolean("availability")->default(TRUE);

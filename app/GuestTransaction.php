@@ -9,7 +9,7 @@ class GuestTransaction extends Model
     //
     protected $guarded = [];
 
-    protected $with = ['transaction'];
+    protected $with = ['transaction', 'user'];
 
     public function reservation()
     {
@@ -19,5 +19,15 @@ class GuestTransaction extends Model
     public function transaction()
     {
         return $this->belongsTo(Transaction::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function scopeCredits($query)
+    {
+        return $query->where('accounting_side', 'CREDIT');
     }
 }

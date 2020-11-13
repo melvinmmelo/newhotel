@@ -67,6 +67,8 @@ Vue.component(
   require("./modules/reservation/ReservationConfirmationForm.vue").default
 );
 
+Vue.component("room-types", require("./modules/room/RoomType.vue").default);
+
 document.addEventListener("turbolinks:load", () => {
   var element = document.getElementById("app");
   if (element != null) {

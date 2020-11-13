@@ -64,5 +64,10 @@ Route::post('/guest/service/create', 'GuestServiceController@save');
 
 // print confirmation
 Route::get('/print/confirmation/{reservation}', 'ReservationController@print')->name('print');
+Route::get('/print/card/{reservation}', 'ReservationController@printGuestCard')->name('printCard');
+Route::get('/print/checkedout-form/{reservation}', 'ReservationController@printCheckedOutForm')->name('printCheckedOutForm');
 
 Route::put('/guest-transaction/update', 'GuestTransactionController@update');
+
+Route::get('/room-types', 'RoomTypeController@index')->name('room-types');
+Route::post('/room-type/create', 'RoomTypeController@save')->name('room-types-add');

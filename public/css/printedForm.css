@@ -135,3 +135,46 @@ a {
 .ub-reg-logo {
     margin-top: 15px;
 }
+
+table{
+    width: 100%;
+}
+.tbStyle1 {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tbStyle1 th {
+    border: 1px solid black;
+}
+
+.tbStyle1 td {
+    padding: 5px;
+}
+
+.cssAmount{
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
+.textItalic{
+    font-style: italic;
+}
+
+
+.fixedBot{
+    /* width: 50%; */
+    position: relative;
+    top: 10%;
+}
+
+.tdStyle1{
+    text-align: center;
+    border-top: 1px solid black;
+    font-weight: bold;
+}
+
+.tdStyle2{
+    text-align: center;
+}

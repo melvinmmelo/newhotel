@@ -71,6 +71,8 @@
                           @click="
                             viewReservation(item);
                             fetchRoomsPerType(item.room_category_code);
+                            getPaymentDetails();
+                            getTransactions();
                             showViewReservationModal = true;
                           "
                           ><button
@@ -115,6 +117,15 @@
             {{ reservation.account.account_name }}
             <span class="badge badge-danger">{{ reservation.status }}</span>
           </h4>
+
+          <h5>
+            Total charges as of {{ current_formatted_date }}
+            <span class="badge badge-danger"> {{ parseFloat(gross).toFixed(2) }}</span>
+<br>
+         Balance
+
+            <span class="badge badge-danger"> {{ parseFloat(balance).toFixed(2) }}</span>
+          </h5>
         </div>
 
         <table class="w-100">
@@ -230,9 +241,7 @@
             class="badge badge-primary"
             v-if="status == 'CHECKED IN'"
             @click="
-              showGuestTransactionListModal = true;
-              getTransactions();
-            "
+              showGuestTransactionListModal = true;"
             >Transaction List</a
           >
         </table>
@@ -242,7 +251,7 @@
           <button
             class="btn btn-sm btn-primary mr-2"
             v-if="reservation.status != 'CHECKED OUT'"
-            @click="showUpdateReservationModal = true"
+            @click="showUpdateReservationModal = true;"
           >
             <span
               v-if="
@@ -263,7 +272,8 @@
                 reservation.status != 'CHECKED OUT' &&
                 reservation.status != 'NO SHOW' &&
                 reservation.status != 'CANCELLED' &&
-                reservation.status != 'CONFIRMED'
+                reservation.status != 'CONFIRMED' &&
+                (balance > 1)
             "
             @click="showECModal = true"
           >
@@ -274,30 +284,46 @@
             type="button"
             class="btn btn-sm btn-success mr-2"
             v-if="
-              reservation.status != 'TENTATIVE' &&
+             (reservation.status != 'TENTATIVE' &&
                 reservation.status != 'CHECKED OUT' &&
                 reservation.status != 'NO SHOW' &&
                 reservation.status != 'CANCELLED' &&
-                reservation.status != 'CONFIRMED'
+                reservation.status != 'CONFIRMED')
+                &&
+                (balance > 1)
             "
             @click="showRouTransModal = true"
           >
             Routed Transaction
           </button>
 
+          <!-- <button
+            type="button"
+            class="btn btn-sm btn-warning mr-2"
+            @click="form.status ='CHECKED OUT'; getPaymentDetails();"
+          >
+            Payments
+          </button> -->
+
           <a :href="printConfirmation" target="_blank">
             <button
               type="button"
-              class="btn btn-sm btn-danger mr-2"
+              class="btn btn-sm btn-warning mr-2"
               v-if="
                 reservation.status == 'CONFIRMED' ||
                   reservation.status == 'CHECKED IN'
               "
             >
-              PRINT
+              Print
             </button>
           </a>
+
+<a :href="linkPrintCard" target="_blank" type="button" class="btn btn-sm btn-primary mr-2">Card</a>
+<a :href="linkPrintCheckedOutForm" target="_blank" type="button" class="btn btn-sm btn-primary mr-2" v-if="form.status == 'CHECKED OUT'">Print Receipt</a>
         </div>
+
+
+
       </div>
     </modal>
 
@@ -439,6 +465,8 @@
           ></vue-ctk-date-time-picker>
         </div>
 
+
+
         <button type="submit" class="btn btn-primary">Save changes</button>
       </form>
     </modal>
@@ -481,6 +509,72 @@
       ></transaction-list>
     </modal>
     <!-- End GUESTTRANSACTIONS -->
+
+    <!-- RecurringChargesModal -->
+    <modal
+      v-if="form.status == 'CHECKED OUT' && balance > 1"
+      title="Payment Details"
+      @close="form.status = ''"
+    >
+    <div style="height: 450px;overflow: auto;">
+    <h4>Transactions</h4>
+    <div style="height: 180px;overflow: auto;">
+    <transaction-list
+        :guestTransactions="guestTransactions"
+      ></transaction-list>
+      </div>
+    <h4>Payments</h4>
+     <div style="height: 180px;overflow: auto;">
+      <guest-payments :payments="payments" :total='totalPayment'></guest-payments>
+      </div>
+     <table class="w-100">
+        <tr>
+          <th>Description</th>
+          <th>Amount</th>
+        </tr>
+
+        <tr>
+          <td>Total Transactions</td>
+          <td>{{ parseFloat(totalTransaction).toFixed(2) }}</td>
+        </tr>
+
+        <tr>
+          <td>Service Charge 10%</td>
+          <td>{{ parseFloat(serviceCharge).toFixed(2)  }}</td>
+        </tr>
+
+        <tr>
+          <td>VAT 12%</td>
+          <td>{{ parseFloat(vat).toFixed(2) }}</td>
+        </tr>
+
+        <tr>
+          <td>Local Tax .75%</td>
+          <td>{{ parseFloat(localTax).toFixed(2) }}</td>
+        </tr>
+
+        <tr>
+          <td>Total Charges</td>
+          <td><h3 class="text-danger">{{  parseFloat(gross).toFixed(2) }}</h3></td>
+        </tr>
+
+        <tr>
+          <td>Amount paid</td>
+          <td>{{ parseFloat(totalPayment).toFixed(2) }}</td>
+        </tr>
+
+        <tr>
+          <td>Balance</td>
+          <td><h3 class="text-danger">{{  parseFloat(balance).toFixed(2) }}</h3></td>
+        </tr>
+      </table>
+
+      <hr>
+
+      <guest-payment-form :reservation="reservation" v-on:insertPayment="appliedPayment"></guest-payment-form>
+    </div>
+    </modal>
+    <!-- End RecurringChargesModal -->
   </div>
 </template>
 
@@ -492,8 +586,11 @@ import VueCtkDateTimePicker from "vue-ctk-date-time-picker";
 import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css";
 
 import GuestTransactionForm from "../transaction/GuestTransactionForm";
+import GuestPaymentForm from "../transaction/GuestPaymentForm";
 import RoomList from "../room/RoomList";
 import GuestRoom from "../room/GuestRoom";
+
+import GuestPayments from "../reservation/GuestPayments";
 
 import GuestServiceForm from "../service/GuestServiceForm";
 
@@ -511,7 +608,9 @@ export default {
     GuestRoom,
     GuestServiceForm,
     TransactionList,
-    RouteTransaction
+    RouteTransaction,
+    GuestPaymentForm,
+    GuestPayments
   },
   data() {
     return {
@@ -520,6 +619,7 @@ export default {
       showViewReservationModal: false,
       showUpdateReservationModal: false,
       showAddServiceModal: false,
+      showPaymentsFormModal: false,
       localReservations: {},
       reservation: "",
       form: new Form({
@@ -532,26 +632,54 @@ export default {
         remarks: ""
       }),
       reservedRooms: [],
-      status: "CHECKED IN",
+      status: "",
       keyGuestName: "",
       showECModal: false,
       showRouTransModal: false,
       roomsPerType: [],
-      guestTransactions: []
+      guestTransactions: [],
+      payments: [],
+      totalPayment: 0,
+      totalTransaction: 0,
+      totalCharges: 0,
+      serviceCharge: 0,
+      vat: 0,
+      localTax: 0,
+      current_formatted_date: "",
     };
+
   },
   methods: {
+    date_function () {
+      var currentDate = new Date();
+      this.current_formatted_date = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+      //document.getElementById("dateNow").value = formatted_date
+      //this.$refs.dateNow.innerHTML = formatted_date
+      //document.getElementById('dateNow').innerHTML = formatted_date
+    },
     closeModalRoute() {
       this.showRouTransModal = false;
       window.location.reload();
+    },
+    appliedPayment(data){
+      this.payments.unshift(data)
+      this.totalPayment = this.totalPayment + parseInt(data.amount);
     },
     handleSubmit() {
       this.form
         .submit("put", "/reservation/update")
         .then(response => {
+          console.log(response)
+
+          if(this.form.status != 'CHECKED OUT'){
+            this.form.status = '';
+            this.showViewReservationModal = false;
+          }else{
+            this.reservation.status = 'CHECKED OUT';
+          }
+
           this.showUpdateReservationModal = false;
-          this.showViewReservationModal = false;
-          this.form.status = "";
+
           this.status = "TENTATIVE";
           this.fetchReservations();
           alert("Reservation has been successfully updated!");
@@ -597,19 +725,56 @@ export default {
     },
     getTransactions() {
       window.axios
-        .get("/api/reservation/" + this.reservation.id)
+        .get("/api/reservation/" + this.reservation.id + "/transactions/debit")
         .then(response => {
-          this.guestTransactions = response.data.transactions;
+          this.guestTransactions = response.data;
         })
         .catch(errors => {
           console.log(errors);
         });
+    },
+    getPaymentDetails() {
+      window.axios
+        .get("/api/reservation/" + this.reservation.id + "/payments")
+        .then(response => {
+          console.log(response);
+          this.payments = response.data.payments;
+          this.totalPayment = response.data.totalPayment;
+          this.totalTransaction = response.data.totalTransaction;
+          this.totalCharges = response.data.totalCharges;
+          this.serviceCharge = response.data.serviceCharge;
+          this.vat = response.data.vat;
+          this.localTax = response.data.localTax;
+        })
+        .catch(errors => {
+          console.log(errors);
+        });
+    },
+
+    formatPrice(price){
+      price.toFixed(2);
     }
   },
   created() {
     this.localReservations = this.reservations;
+
+  },
+  mounted() {
+    this.date_function();
   },
   computed: {
+    linkPrintCard(){
+      return '/print/card/' + this.reservation.id
+    },
+    linkPrintCheckedOutForm(){
+      return '/print/checkedout-form/' + this.reservation.id
+    },
+    gross(){
+      return (this.totalCharges + this.totalTransaction)
+    },
+    balance(){
+      return this.gross -  this.totalPayment
+    },
     filteredReservations() {
       return this.localReservations.filter(
         reservation => reservation.status == "CHECKED IN"

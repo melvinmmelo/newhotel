@@ -126,6 +126,13 @@ class ReservationController extends Controller
 
     public function update()
     {
+
+        // $reservation = Reservation::find(request()->input('reservation_id'));
+        // echo $allTransactionAmount = $reservation->transactions();
+        // return response()->json("test", 422);
+
+
+
         // $subErrors = array();
         $errors = array(
             'message' => "",
@@ -179,10 +186,6 @@ class ReservationController extends Controller
 
 
 
-
-
-
-
         // if status = checked in
         // insert into guest transactions
         if(request()->input('status') == "CHECKED IN"){
@@ -210,8 +213,25 @@ class ReservationController extends Controller
         //return response()->json("erwe", 200);
     }
 
+    public function payments(Reservation $reservation)
+    {
+        dd($reservation->payments());
+        //return view('reservation-confirmation-form', compact('reservation'));
+    }
+
     public function print(Reservation $reservation)
     {
         return view('reservation-confirmation-form', compact('reservation'));
     }
+
+    public function printGuestCard(Reservation $reservation)
+    {
+        return view('registration-card', compact('reservation'));
+    }
+
+    public function printCheckedOutForm(Reservation $reservation)
+    {
+        return view('checked-out-form', compact('reservation'));
+    }
+
 }

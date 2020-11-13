@@ -17,7 +17,7 @@ class CreditCard extends Model
         }elseif($firstNumber == 6){
             return 'DISCOVER';
         }else{
-            return 'NA';
+            return;
         }
     }
 }

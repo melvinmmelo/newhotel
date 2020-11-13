@@ -20,13 +20,12 @@ class CompanyController extends Controller
 
     public function save()
     {
-
         $vData = $this->validate(request(), [
             'name' => 'required|min:2|max:191|unique:companies',
             'address' => 'required|min:1|max:191',
         ]);
 
-        $company = Company::create($vData);
+        $company = Auth::user()->companies()->create($vData);
 
         return response()->json($company, 200);
     }

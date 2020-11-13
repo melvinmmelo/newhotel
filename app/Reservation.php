@@ -22,7 +22,6 @@ class Reservation extends Model
     //     'actual_arrival_date',
     //     'actual_departure_date',
     // ];
-
     public function getDescriptionForEvent(string $eventName): string
     {
         return "Reservation has been {$eventName}";
@@ -58,6 +57,48 @@ class Reservation extends Model
         return $this->hasMany(GuestTransaction::class);
     }
 
+
+    public function payments()
+    {
+        return GuestTransaction::where('reservation_id', $this->id)->whereHas('transaction', function ($query){
+            $query->where('accounting_side', 'CREDIT');
+        })->get();
+
+    }
+
+    public function totalTransactions()
+    {
+        return GuestTransaction::where('reservation_id', $this->id)->whereHas('transaction', function ($query){
+            $query->where('accounting_side', 'DEBIT');
+        })->sum('amount');
+
+    }
+
+    public function totalPayment()
+    {
+        return GuestTransaction::where('reservation_id', $this->id)->whereHas('transaction', function ($query) {
+            $query->where('accounting_side', 'CREDIT');
+        })->sum('amount');
+    }
+
+    public function serviceCharge(){
+        return $this->totalTransactions() * 0.1;
+    }
+    public function localTax(){
+        return $this->totalTransactions() * 0.0075;
+    }
+    public function vat(){
+        return $this->totalTransactions() * 0.12;
+    }
+
+    public function totalCharges(){
+        return $this->totalTransactions() * 0.2275;
+    }
+
+    public function netAmount(){
+        return $this->totalTransactions() * 1.2275;
+    }
+
     public static function generateConfirmationId()
     {
         $countReservations = self::count();
@@ -80,14 +121,14 @@ class Reservation extends Model
                                    ->whereMonth('arrival_date', $arrivalDate->month)
                                    ->get();
 
-        foreach($userBookings as $booking){
+        foreach ($userBookings as $booking) {
             $boArD = Carbon::parse($booking->arrival_date);
             $boDeD = Carbon::parse($booking->departure_date);
             //check kung pasok then count kung pasok
-            if($arrivalDate->day >= $boArD->day AND $arrivalDate->day <= $boDeD->day  ){
+            if ($arrivalDate->day >= $boArD->day and $arrivalDate->day <= $boDeD->day) {
                 $totalArrBookings++;
             }
-            if($departureDate->day >= $boArD->day AND $departureDate->day <= $boDeD->day){
+            if ($departureDate->day >= $boArD->day and $departureDate->day <= $boDeD->day) {
                 $totalDepBookings++;
             }
         }
@@ -102,7 +143,7 @@ class Reservation extends Model
                                     ->where('user_id', Auth::user()->id)
                                     ->sum('capacity');
 
-        if($totalArrBookings > $roomCategoryCapacity || $totalDepBookings > $roomCategoryCapacity){
+        if ($totalArrBookings > $roomCategoryCapacity || $totalDepBookings > $roomCategoryCapacity) {
             return false;
         }
 
@@ -110,5 +151,10 @@ class Reservation extends Model
         return true;
         // check kung ilan ang available sa araw na iyon
         // total capacity of the building ?
+    }
+
+    public static function format($price)
+    {
+        return number_format($price,2);
     }
 }

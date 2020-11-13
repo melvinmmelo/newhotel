@@ -33,7 +33,7 @@
         ></span>
       </div>
 
-      <button type="submit" class="btn btn-primary">Save changes</button>
+      <button type="submit" class="btn btn-primary">Insert payment</button>
     </form>
   </div>
 </template>
@@ -64,16 +64,18 @@ export default {
       this.form
         .submit("post", "/guest/transaction/create")
         .then(response => {
+          this.$emit("insertPayment", response);
           alert("Guest Transaction has been created!");
         })
         .catch(errors => {
           console.log(errors.errors);
+          //this.$emit("insertPayment", this.form);
           alert(errors.message);
         });
     },
     fetchTransactions() {
       window.axios
-        .get("/api/transactions/debit")
+        .get("/api/transactions/credit")
         .then(response => {
           this.transactions = response.data;
         })

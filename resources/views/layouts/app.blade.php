@@ -95,9 +95,9 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('rooms') }}">{{ __('Rooms') }}</a>
+                                    <a class="dropdown-item" href="{{ route('room-types') }}">{{ __('Room Types and Rates') }}</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('transactions') }}">{{ __('Transactions') }}</a>
-                                    <a class="dropdown-item" href="{{ route('promos') }}">{{ __('Rates') }}</a>
                                     <a class="dropdown-item" href="{{ route('promos') }}">{{ __('Reset') }}</a>
                                 </div>
                             </li>

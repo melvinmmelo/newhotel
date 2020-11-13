@@ -20,6 +20,13 @@ class TransactionController extends Controller
         return view('transaction', compact('transactions'));
     }
 
+    public function credits()
+    {
+        $transactions = Transaction::credit()->where('user_id', Auth::user()->id)
+                                    ->get();
+        return view('transaction', compact('transactions'));
+    }
+
     public function save()
     {
         $transCode = Transaction::generateCode();

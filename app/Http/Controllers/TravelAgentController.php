@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\TravelAgent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TravelAgentController extends Controller
 {
@@ -28,7 +29,7 @@ class TravelAgentController extends Controller
             'commission' => 'required|min:1|max:191|numeric',
         ]);
 
-        $travelAgent = TravelAgent::create($vData);
+        $travelAgent = Auth::user()->travelAgent()->create($vData);
 
         return response()->json($travelAgent, 200);
     }
